@@ -1,0 +1,242 @@
+@page "/"
+@page "/master_view"
+@using Financial
+@using FormsSample.Models
+@using Models.Financial
+@inject IFinancialService FinancialService
+
+<style>
+    div.validation-message {
+        color: hsl(var(--ig-error-500));
+    }
+</style>
+<div class="row-layout master-view-container">
+    <div class="column-layout group">
+        <div class="container vertical">
+            <EditForm EditContext="editContext" OnValidSubmit="SubmitSecond" FormName="Starship3">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+                <div>
+                    <label>
+                        Identifier:
+                        <IgbInput @bind-Value="Model!.Id" MaxLength="16" Required Blur="@OnBlur">
+                        </IgbInput>
+                         <ValidationMessage For="() => Model!.Id"> </ValidationMessage>
+                    </label>                    
+                </div>
+                <div>
+                    <label>
+                        Description (optional):
+                        <IgbInput @bind-Value="Model!.Description"/>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Primary Classification:
+                        @* This dosn't work and should be fixed in component: *@
+                        @* <IgbSelect Outlined="true" Label="Label/Placeholder" class="user-input"  @bind-Value="Model!.Classification" master_view-scope> *@
+                        
+                        @* This also doesn't work becouse e.Details is always null, probably bug in the component: *@
+                        <IgbSelect Outlined="true" Label="Label/Placeholder" class="user-input"  Value="@Model!.Classification"
+                                    Change="@((IgbSelectItemComponentEventArgs e) => Model!.Classification = e?.Detail.Value)"
+                                   master_view-scope>
+                            <IgbSelectItem Value="">
+                                Select classification ...
+                            </IgbSelectItem>
+                            <IgbSelectItem Value="Exploration" Selected="@(Model!.Classification == "Exploration")">
+                                Exploration
+                            </IgbSelectItem>
+                            <IgbSelectItem Value="Diplomacy" Selected="@(Model!.Classification == "Diplomacy")">
+                                Diplomacy
+                            </IgbSelectItem>
+                            <IgbSelectItem Value="Defense" Selected="@(Model!.Classification == "Defense")">
+                                Defense
+                            </IgbSelectItem>
+                        </IgbSelect>
+                    </label>
+                     <ValidationMessage For="() => Model!.Classification" />
+                </div>
+                <div>
+                    <label>
+                        Maximum Accommodation:
+                        <InputNumber @bind-Value="Model!.MaximumAccommodation"/>
+                    </label>
+                    <ValidationMessage For="() => Model!.MaximumAccommodation" />
+                </div>
+                <div>
+                    <label>
+                        Engineering Approval:
+                        <InputCheckbox @bind-Value="Model!.IsValidatedDesign"/>                        
+                    </label>
+                    <ValidationMessage For="() => Model!.IsValidatedDesign" />
+                </div>
+                <div>
+                    <label>
+                        Production Date:
+                         <InputDate @bind-Value="Model!.ProductionDate" Required />
+                         <ValidationMessage For="() => Model!.ProductionDate" />
+                    </label>
+                </div>
+                <div>
+                    <button type="submit">Submit</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+    <div class="column-layout group">
+         <EditForm EditContext="editContext1" OnValidSubmit="Submit" FormName="Starship2">
+             <DataAnnotationsValidator />
+                <IgbCombo Outlined="true" Data="@_financialBoxOfficeRevenue" Label="Label/Placeholder" DisplayKey="Franchise" SingleSelect="true" class="user-input" master_view-scope></IgbCombo>
+                <span class="user-input">ButtonGroup not yet available in Blazor</span>
+                <IgbCheckbox LabelPosition="CheckboxBaseLabelPosition.After" class="user-input_2" master_view-scope>
+                    Label
+                </IgbCheckbox>
+                <IgbCombo Outlined="true" Data="@_financialBoxOfficeRevenue" Label="Label/Placeholder" DisplayKey="Franchise" SingleSelect="true" class="user-input" master_view-scope></IgbCombo>
+                <IgbDatePicker Label="Date" class="date-picker" master_view-scope></IgbDatePicker>
+                <IgbButton Variant="ButtonVariant.Fab" Size="SizableComponentSize.Large" class="user-input_2" master_view-scope>
+                    <span class="material-icons">
+                        add
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </IgbButton>
+                <IgbIconButton Variant="IconButtonVariant.Flat">
+                    <span class="material-icons">
+                        email
+                    </span>
+                    <IgbRipple></IgbRipple>
+                </IgbIconButton>
+             <IgbInput @bind-Value="Model1!.Id" Required Label="Identifier" Outlined="true" class="user-input" master_view-scope></IgbInput>
+                 <ValidationMessage For="() => Model1!.Id"> </ValidationMessage>
+             <IgbInput Label="Name" @bind-Value="Model1!.Name" Outlined="true" class="user-input" master_view-scope></IgbInput>
+             <ValidationMessage For="() => Model1!.Name" />
+             <IgbInput DisplayType="InputType.Number" Label="Duration" Outlined="true" class="user-input" master_view-scope></IgbInput>
+             <IgbInput DisplayType="InputType.Email" @bind-Value="Model1!.Email" Label="Email address" Outlined="true" class="user-input" master_view-scope></IgbInput>
+             <ValidationMessage For="() => Model1!.Email" />             
+             <IgbInput DisplayType="InputType.Password" @bind-Value="Model1!.Password" Label=" Password"  Required Outlined="true" class="user-input" master_view-scope />
+             <ValidationMessage For="() => Model1!.Password" />
+            <IgbInput DisplayType="InputType.Password" @bind-Value="Model1!.PasswordConfirmation" Label=" Password Confirmation" Required Outlined="true" class="user-input" master_view-scope></IgbInput>
+            <ValidationMessage For="() => Model1!.PasswordConfirmation" />
+
+             <IgbInput DisplayType="InputType.Tel" @bind-Value="Model1!.Phone"  Label="Phone" Outlined="true" class="user-input" master_view-scope></IgbInput>
+             <IgbDatePicker Label="Date" @bind-Value="Model1!.Date" MinDate="@MinDate" MaxDate="@MaxDate" class="user-input" master_view-scope></IgbDatePicker>
+             <ValidationMessage For="() => Model!.Date" />
+            <IgbRadioGroup Alignment="RadioGroupAlignment.Horizontal" class="user-input_2" master_view-scope>
+                <IgbRadio Value="1" class="radio" master_view-scope>
+                    Label
+                </IgbRadio>
+                <IgbRadio Value="2" class="radio" master_view-scope>
+                    Label
+                </IgbRadio>
+                <IgbRadio Value="3" class="radio" master_view-scope>
+                    Label
+                </IgbRadio>
+            </IgbRadioGroup>
+            <IgbRating Size="SizableComponentSize.Large" class="user-input_2" master_view-scope></IgbRating>
+            <IgbSelect Outlined="true" Label="Label/Placeholder" class="user-input" master_view-scope>
+                <IgbSelectItem Value="Option">
+                    Option
+                </IgbSelectItem>
+            </IgbSelect>
+            <IgbSlider Value="@_value" Min="0" Max="100" Step="10" DiscreteTrack="true" Change="@(e => _value = (double)e.Detail)" class="slider" master_view-scope></IgbSlider>
+            <IgbSwitch class="user-input_2" master_view-scope>
+                Label
+            </IgbSwitch>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+ @code {
+    private EditContext? editContext;
+    private EditContext? editContext1;
+    private List<BoxOfficeRevenueType> _financialBoxOfficeRevenue = new();
+    private double _value = 0;
+    private ValidationMessageStore? messageStore;
+    private ValidationMessageStore? messageStore1;
+    
+    private DateTime MinDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private DateTime MaxDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month));
+
+    protected override async Task OnInitializedAsync()
+    {
+        _financialBoxOfficeRevenue = await FinancialService.GetBoxOfficeRevenue();
+        await base.OnInitializedAsync();
+    }
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+        editContext = new(Model);
+        editContext.OnValidationRequested += HandleValidationRequested;
+        messageStore = new(editContext);
+
+        Model1 ??= new();
+        editContext1 = new(Model1);
+        editContext1.OnValidationRequested += HandleValidationRequested;
+        messageStore1 = new(editContext1);
+    }
+
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
+    {
+        messageStore?.Clear();
+
+        if (string.IsNullOrWhiteSpace(Model.Id) || Model.Id.Length < 3)
+        {
+            messageStore?.Add(() => Model.Id, "Id must be at least 3 characters long.");
+        }
+
+         messageStore1?.Clear();
+        if (string.IsNullOrWhiteSpace(Model1.Id) || Model1.Id.Length < 3)
+         {
+             messageStore1?.Add(() => Model1.Id, "The Identifier must be at least 3 characters long.");
+         }
+        
+    }
+
+
+    public void OnBlur()
+    {
+        messageStore?.Clear();
+
+        if (string.IsNullOrWhiteSpace(Model.Id) || Model.Id.Length < 3)
+        {
+            messageStore?.Add(() => Model.Id, "Id must be at least 3 characters long.");
+        }
+    }
+
+    public void Dispose()
+    {
+        if (editContext is not null)
+        {
+            editContext.OnValidationRequested -= HandleValidationRequested;
+        }
+    }
+
+    public void OnSubmit(IgbFormDataEventArgs parameters)
+    {
+        Console.WriteLine("OnSubmit called");
+    }
+
+
+    [SupplyParameterFromForm] private Starship? Model { get; set; }
+
+    [SupplyParameterFromForm] private Starship? Model1 { get; set; }
+
+    
+    private void Submit()
+    {
+        Console.WriteLine($"Id = {Model?.Id} Description = {Model?.Description} " +
+                                 $"Classification = {Model?.Classification} MaximumAccommodation = " +
+                                 $"{Model?.MaximumAccommodation} IsValidatedDesign = " +
+                                 $"{Model?.IsValidatedDesign} ProductionDate = {Model?.ProductionDate}");
+    }
+    private void SubmitSecond()
+    {
+        Console.WriteLine($"Id = {Model?.Id} Description = {Model?.Description} " +
+                                 $"Classification = {Model?.Classification} MaximumAccommodation = " +
+                                 $"{Model?.MaximumAccommodation} IsValidatedDesign = " +
+                                 $"{Model?.IsValidatedDesign} ProductionDate = {Model?.ProductionDate}");
+    }
+
+}

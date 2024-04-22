@@ -1,0 +1,44 @@
+.row-layout {
+    display: flex;
+}
+.master-view-container {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    height: 100%;
+}
+.column-layout {
+    display: flex;
+    flex-direction: column;
+}
+.group {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    position: relative;
+    min-width: 50px;
+    min-height: 50px;
+}
+.user-input {
+    height: max-content;
+    min-width: min-content;
+}
+.user-input_2 {
+    width: max-content;
+    height: max-content;
+}
+.date-picker {
+    height: max-content;
+    min-width: 120px;
+}
+.radio {
+    padding: 8px;
+}
+.slider {
+    height: max-content;
+    min-width: 50px;
+}
+.textarea {
+    height: max-content;
+    min-width: min-content;
+}
