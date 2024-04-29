@@ -1,0 +1,97 @@
+<div class="column-layout group">
+  <igx-grid #grid primaryKey="customerId" displayDensity="cosy" rowSelection="single" [hideRowSelectors]="true" [data]="northwindCustomers" class="grid" (rowSelectionChanging)="handleRowSelection($event)">
+    <igx-column field="customerId" dataType="string" header="customerId" [filterable]="false" [selectable]="false"></igx-column>
+    <igx-column field="companyName" dataType="string" header="companyName" [filterable]="false" [selectable]="false"></igx-column>
+    <igx-column field="contactName" dataType="string" header="contactName" [filterable]="false" [selectable]="false"></igx-column>
+    <igx-column field="contactTitle" dataType="string" header="contactTitle" [filterable]="false" [selectable]="false"></igx-column>
+    <igx-column field="address.city" dataType="string" header="address city" [filterable]="false" [selectable]="false"></igx-column>
+    <igx-column field="address.country" dataType="string" header="address country" [filterable]="false" [selectable]="false"></igx-column>
+  </igx-grid>
+  <button igxButton="contained" igxRipple="white" (click)="onFormOpen()">Add new customer</button>
+  <igx-dialog #form [closeOnOutsideSelect]="true">
+    <igx-dialog-title>
+        <div class="title-container">
+            <div class="dialog-title">Add new customer</div>
+        </div>
+    </igx-dialog-title>
+
+      <form class="input-group-form" [formGroup]="customer" (ngSubmit)="onAddNewCustomer()">
+        <div class="column-layout group">
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="customerId" type="text" formControlName="customerId" igxInput />
+            <label igxLabel for="customerId">Customer ID</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="companyName" type="text" formControlName="companyName" igxInput />
+            <label igxLabel for="companyName">Company Name</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="contactName" type="text" formControlName="contactName" igxInput />
+            <label igxLabel for="contactName">Contact Name</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="contactTitle" type="text" formControlName="contactTitle" igxInput />
+            <label igxLabel for="contactTitle">Contact Title</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="addressCity" type="text" formControlName="addressCity" igxInput />
+            <label igxLabel for="addressCity">City</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="addressCountry" type="text" formControlName="addressCountry" igxInput />
+            <label igxLabel for="addressCountry">Country</label>
+          </igx-input-group>
+          <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        </div>
+      </form>
+
+      <div igxDialogActions>
+          <button igxButton (click)="form.close()">CANCEL</button>
+          <button igxButton (click)="onAddNewCustomer()">Add customer</button>
+      </div>
+  </igx-dialog>
+
+  <igx-dialog #formUpdate [closeOnOutsideSelect]="true">
+    <igx-dialog-title>
+        <div class="title-container">
+            <div class="dialog-title">Edit customer</div>
+        </div>
+    </igx-dialog-title>
+
+    <form class="input-group-form" [formGroup]="customer">
+      <div class="column-layout group">
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="customerId" type="text" formControlName="customerId" igxInput />
+          <label igxLabel for="customerId">Customer ID</label>
+        </igx-input-group>
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="companyName" type="text" formControlName="companyName" igxInput />
+          <label igxLabel for="companyName">Company Name</label>
+        </igx-input-group>
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="contactName" type="text" formControlName="contactName" igxInput />
+          <label igxLabel for="contactName">Contact Name</label>
+        </igx-input-group>
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="contactTitle" type="text" formControlName="contactTitle" igxInput />
+          <label igxLabel for="contactTitle">Contact Title</label>
+        </igx-input-group>
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="addressCity" type="text" formControlName="addressCity" igxInput />
+          <label igxLabel for="addressCity">City</label>
+        </igx-input-group>
+        <igx-input-group type="border" class="ig-typography__body-1 textarea">
+          <input name="addressCountry" type="text" formControlName="addressCountry" igxInput />
+          <label igxLabel for="addressCountry">Country</label>
+        </igx-input-group>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      </div>
+    </form>
+
+    <div igxDialogActions>
+        <button igxButton class="alert" (click)="onDelete()">Delete customer</button>
+        <button igxButton (click)="formUpdate.close()">CANCEL</button>
+        <button igxButton (click)="onSubmit()">Edit customer</button>
+    </div>
+  </igx-dialog>
+</div>

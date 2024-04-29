@@ -1,0 +1,45 @@
+:host {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+}
+
+.column-layout {
+  display: flex;
+  flex-direction: column;
+}
+.group {
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  position: relative;
+  padding: 16px;
+  min-width: 50px;
+  min-height: 50px;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.grid {
+  min-width: 600px;
+  min-height: 300px;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.alert {
+  background-color: red;
+  color: black;
+}
+
+.input-group-form .igx-input-group {
+  margin-bottom: 20px;
+}
+
+.igx-dialog-actions button {
+  margin-right: 10px;
+}
+
+.title-container {
+  margin-bottom: 20px;
+}
