@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomersType } from '../models/northwind/customers-type';
-import { AddressType } from '../models/northwind/address-type';
 import { NorthwindService } from '../services/northwind.service';
-// import { CustomerPayload } from '../models/customer-interface';
 import { IRowSelectionEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+
+export interface Address {
+  city: FormControl<string | null>,
+  country: FormControl<string | null>
+}
 
 export interface Customer {
   customerId: FormControl<string | null>,
   companyName: FormControl<string | null>,
   contactName: FormControl<string | null>,
   contactTitle: FormControl<string | null>,
-  addressCity: FormControl<string | null>,
-  addressCountry: FormControl<string | null>
+  address: FormGroup<Address>
 }
 
 @Component({
@@ -28,15 +30,17 @@ export class MasterViewComponent implements OnInit {
   public customer!: FormGroup<Customer>;
   public errorMessage: string = '';
 
-  constructor(private northwindService: NorthwindService, private formBuilder: FormBuilder) {
-    this.customer = this.formBuilder.group({
-      customerId: [''],
-      companyName: ['', Validators.required],
-      contactName: ['', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")],
-      contactTitle: ['', Validators.required],
-      addressCity: ['', Validators.required],
-      addressCountry: ['', Validators.required]
-    });
+  constructor(private northwindService: NorthwindService) {
+    this.customer = new FormGroup<Customer>({
+      customerId: new FormControl(''),
+      companyName: new FormControl('', Validators.required),
+      contactName: new FormControl('', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
+      contactTitle: new FormControl('', Validators.required),
+      address: new FormGroup<Address>({
+        city: new FormControl('', Validators.required),
+        country: new FormControl('', Validators.required)
+      }),
+    })
   }
 
   ngOnInit() {
@@ -48,14 +52,7 @@ export class MasterViewComponent implements OnInit {
 
   public handleRowSelection(event: IRowSelectionEventArgs) {
     if (event.newSelection) {
-      this.customer.patchValue({
-        customerId: event.newSelection[0].customerId,
-        companyName: event.newSelection[0].companyName,
-        contactName: event.newSelection[0].contactName,
-        contactTitle: event.newSelection[0].contactTitle,
-        addressCity: event.newSelection[0].address.city,
-        addressCountry: event.newSelection[0].address.country
-      })
+      this.customer.patchValue(event.newSelection[0]);
       this.dialog.open();
     }
   }
@@ -100,8 +97,8 @@ export class MasterViewComponent implements OnInit {
       const myCompanyName = this.customer.value.companyName;
       const myEditedContactName = this.customer.value.contactName;
       const myContactTitle = this.customer.value.contactTitle;
-      const myAddressCity = this.customer.value.addressCity;
-      const myAddressCountry = this.customer.value.addressCountry;
+      const myAddressCity = this.customer.value.address?.city;
+      const myAddressCountry = this.customer.value.address?.country;
 
       if (myEditedContactName !== undefined && myEditedContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
         myAddressCity !== undefined && myAddressCountry !== undefined && myCustomerId !== undefined) {
@@ -122,7 +119,7 @@ export class MasterViewComponent implements OnInit {
 
         this.northwindService.updateCustomer(updatedCustomer).subscribe({
           next: (response) => this.handleResponse(response),
-          error: (error) =>  this.handleError(error)
+          error: (error) => this.handleError(error)
         });
       }
     } else {
@@ -137,8 +134,8 @@ export class MasterViewComponent implements OnInit {
       const myCompanyName = this.customer.value.companyName;
       const myEditedContactName = this.customer.value.contactName;
       const myContactTitle = this.customer.value.contactTitle;
-      const myAddressCity = this.customer.value.addressCity;
-      const myAddressCountry = this.customer.value.addressCountry;
+      const myAddressCity = this.customer.value.address?.city;
+      const myAddressCountry = this.customer.value.address?.country;
 
       if (myEditedContactName !== undefined && myEditedContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
         myAddressCity !== undefined && myAddressCountry !== undefined && myCustomerId !== undefined) {
@@ -159,7 +156,7 @@ export class MasterViewComponent implements OnInit {
 
         this.northwindService.addCustomer(newCustomer).subscribe({
           next: (response) => this.handleResponse(response),
-          error: (error) =>  this.handleError(error)
+          error: (error) => this.handleError(error)
         });
       }
     } else {
@@ -175,7 +172,7 @@ export class MasterViewComponent implements OnInit {
       if (myCustomerId !== null && myCustomerId !== undefined) {
         this.northwindService.deleteCustomer(myCustomerId).subscribe({
           next: (response) => this.handleResponse(response),
-          error: (error) =>  this.handleError(error)
+          error: (error) => this.handleError(error)
         });
       }
     } else {
