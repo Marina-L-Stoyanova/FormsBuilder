@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomersType } from '../models/northwind/customers-type';
 import { NorthwindService } from '../services/northwind.service';
-import { IRowSelectionEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
+import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
 
 export interface Address {
   city: FormControl<string | null>,
@@ -24,11 +24,14 @@ export interface Customer {
 })
 export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
-  @ViewChild('formUpdate', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
-  @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog1: IgxDialogComponent;
+  @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
   public northwindCustomers: CustomersType[] = [];
   public customer!: FormGroup<Customer>;
   public errorMessage: string = '';
+  public dialogTitle: string = '';
+  public confirmText: string = '';
+  public confirmEvent: string = '';
+  public isDeleteButtonHidden: boolean = false;
 
   constructor(private northwindService: NorthwindService) {
     this.customer = new FormGroup<Customer>({
@@ -50,16 +53,23 @@ export class MasterViewComponent implements OnInit {
     });
   }
 
-  public handleRowSelection(event: IRowSelectionEventArgs) {
-    if (event.newSelection) {
-      this.customer.patchValue(event.newSelection[0]);
+  public handleRowSelection(event: IGridRowEventArgs) {
+    if (event.row.data) {
+      this.customer.patchValue(event.row.data);
+      this.dialogTitle = 'Edit customer';
+      this.confirmText = 'Edit customer';
+      this.confirmEvent = "onSubmit()";
       this.dialog.open();
     }
   }
 
   public onFormOpen() {
     this.customer.reset();
-    this.dialog1.open();
+    this.dialogTitle = 'Add new customer';
+    this.confirmText = 'Add customer';
+    this.confirmEvent = "onAddNewCustomer()";
+    this.isDeleteButtonHidden = true;
+    this.dialog.open();
   }
 
   private fetchCustomers(): void {
@@ -79,7 +89,6 @@ export class MasterViewComponent implements OnInit {
     this.fetchCustomers(); // Update customer list
     this.resetForm();
     this.dialog.close();
-    this.dialog1.close();
   }
 
   private handleError(error: any): void {
@@ -91,7 +100,7 @@ export class MasterViewComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  onEditCustomer(): void {
     if (this.customer.valid) {
       const myCustomerId = this.customer.value.customerId;
       const myCompanyName = this.customer.value.companyName;
@@ -179,5 +188,17 @@ export class MasterViewComponent implements OnInit {
       // Handle invalid form state
       this.errorMessage = 'Please provide valid data for all fields.';
     }
+  }
+
+  onConfirm(): void {
+    if (this.confirmText === 'Add customer') {
+      this.onAddNewCustomer();
+    } else if (this.confirmText === 'Edit customer') {
+      this.onEditCustomer();
+    }
+  }
+
+  onDialogClosed(): void {
+    this.isDeleteButtonHidden = false;
   }
 }
