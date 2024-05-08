@@ -4,17 +4,17 @@ import { CustomersType } from '../models/northwind/customers-type';
 import { NorthwindService } from '../services/northwind.service';
 import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
 
-export interface Address {
+export interface AddressForm {
   city: FormControl<string | null>,
   country: FormControl<string | null>
 }
 
-export interface Customer {
+export interface CustomerForm {
   customerId: FormControl<string | null>,
   companyName: FormControl<string | null>,
   contactName: FormControl<string | null>,
   contactTitle: FormControl<string | null>,
-  address: FormGroup<Address>
+  address: FormGroup<AddressForm>
 }
 
 @Component({
@@ -26,7 +26,7 @@ export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
   @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
   public northwindCustomers: CustomersType[] = [];
-  public customer!: FormGroup<Customer>;
+  public customer!: FormGroup<CustomerForm>;
   public errorMessage: string = '';
   public dialogTitle: string = '';
   public confirmText: string = '';
@@ -34,12 +34,12 @@ export class MasterViewComponent implements OnInit {
   public isDeleteButtonHidden: boolean = false;
 
   constructor(private northwindService: NorthwindService) {
-    this.customer = new FormGroup<Customer>({
+    this.customer = new FormGroup<CustomerForm>({
       customerId: new FormControl(''),
       companyName: new FormControl('', Validators.required),
       contactName: new FormControl('', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
       contactTitle: new FormControl('', Validators.required),
-      address: new FormGroup<Address>({
+      address: new FormGroup<AddressForm>({
         city: new FormControl('', Validators.required),
         country: new FormControl('', Validators.required)
       }),
