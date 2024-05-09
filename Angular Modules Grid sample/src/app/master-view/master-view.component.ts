@@ -1,21 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CustomersType } from '../models/northwind/customers-type';
-import { NorthwindService } from '../services/northwind.service';
 import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
-
-export interface AddressForm {
-  city: FormControl<string | null>,
-  country: FormControl<string | null>
-}
-
-export interface CustomerForm {
-  customerId: FormControl<string | null>,
-  companyName: FormControl<string | null>,
-  contactName: FormControl<string | null>,
-  contactTitle: FormControl<string | null>,
-  address: FormGroup<AddressForm>
-}
+import { CustomersType } from '../models/northwind/customers-type';
+import { Address, Customer } from '../models/northwind/northwind-forms/northwind-forms';
+import { NorthwindService } from '../services/northwind.service';
 
 @Component({
   selector: 'app-master-view',
@@ -26,7 +14,7 @@ export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
   @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
   public northwindCustomers: CustomersType[] = [];
-  public customer!: FormGroup<CustomerForm>;
+  public customer!: FormGroup<Customer>;
   public errorMessage: string = '';
   public dialogTitle: string = '';
   public confirmText: string = '';
@@ -34,12 +22,12 @@ export class MasterViewComponent implements OnInit {
   public isDeleteButtonHidden: boolean = false;
 
   constructor(private northwindService: NorthwindService) {
-    this.customer = new FormGroup<CustomerForm>({
+    this.customer = new FormGroup<Customer>({
       customerId: new FormControl(''),
       companyName: new FormControl('', Validators.required),
       contactName: new FormControl('', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
       contactTitle: new FormControl('', Validators.required),
-      address: new FormGroup<AddressForm>({
+      address: new FormGroup<Address>({
         city: new FormControl('', Validators.required),
         country: new FormControl('', Validators.required)
       }),

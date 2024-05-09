@@ -1,14 +1,13 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders  } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CustomerForm } from '../master-view/master-view.component';
 import { CustomerPayload } from '../models/customer-interface';
+import { Customer } from '../models/northwind/northwind-forms/northwind-forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NorthwindService {
-  // Update the URL if needed -> https://github.com/IgniteUI/NorthwindAPI
   private apiUrl = 'https://localhost:7244/customers';
 
   constructor(private http: HttpClient) { }
@@ -17,24 +16,24 @@ export class NorthwindService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  addCustomer(customerPayload: CustomerPayload): Observable<CustomerForm> {
+  addCustomer(customerPayload: CustomerPayload): Observable<Customer> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       // Generate token following this README -> https://github.com/IgniteUI/NorthwindAPI
       'Authorization': 'Bearer ' + ''
     });
 
-    return this.http.post<CustomerForm>(this.apiUrl, customerPayload, { headers });
+    return this.http.post<Customer>(this.apiUrl, customerPayload, { headers });
   }
 
-  updateCustomer(customerPayload: CustomerPayload): Observable<CustomerForm> {
+  updateCustomer(customerPayload: CustomerPayload): Observable<Customer> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       // Generate token following this README -> https://github.com/IgniteUI/NorthwindAPI
       'Authorization': 'Bearer ' + ''
     });
 
-    return this.http.put<CustomerForm>(this.apiUrl, customerPayload, { headers });
+    return this.http.put<Customer>(this.apiUrl, customerPayload, { headers });
   }
 
   deleteCustomer(cusotmerId: string) {
