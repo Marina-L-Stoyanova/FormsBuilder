@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
-import { CustomersType } from '../models/northwind/customers-type';
-import { Address, Customer } from '../models/northwind/northwind-forms/northwind-forms';
+import { AddressForm, CustomersForm, CustomersType, FormType } from '../models/northwind/customers-type';
+//import { Address, Customer } from '../models/northwind/northwind-forms/northwind-forms';
 import { NorthwindService } from '../services/northwind.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
   @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
   public northwindCustomers: CustomersType[] = [];
-  public customer!: FormGroup<Customer>;
+  public customer!: FormGroup<FormType<CustomersType>>;
   public errorMessage: string = '';
   public dialogTitle: string = '';
   public confirmText: string = '';
@@ -22,15 +22,19 @@ export class MasterViewComponent implements OnInit {
   public isDeleteButtonHidden: boolean = false;
 
   constructor(private northwindService: NorthwindService) {
-    this.customer = new FormGroup<Customer>({
-      customerId: new FormControl(''),
+    this.customer = new FormGroup<FormType<CustomersType>>({
+      customerID: new FormControl(''),
       companyName: new FormControl('', Validators.required),
       contactName: new FormControl('', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
       contactTitle: new FormControl('', Validators.required),
-      address: new FormGroup<Address>({
+      address: new FormGroup<AddressForm>({
         city: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required)
-      }),
+        country: new FormControl('', Validators.required),
+        /* street: new FormControl(''),
+        region: new FormControl(''),
+        phone: new FormControl(''),
+        postalCode: new FormControl('') */
+      } as AddressForm),
     })
   }
 
@@ -90,7 +94,7 @@ export class MasterViewComponent implements OnInit {
 
   onEditCustomer(): void {
     if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerId;
+      const myCustomerId = this.customer.value.customerID;
       const myCompanyName = this.customer.value.companyName;
       const myEditedContactName = this.customer.value.contactName;
       const myContactTitle = this.customer.value.contactTitle;
@@ -127,7 +131,7 @@ export class MasterViewComponent implements OnInit {
 
   onAddNewCustomer(): void {
     if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerId;
+      const myCustomerId = this.customer.value.customerID;
       const myCompanyName = this.customer.value.companyName;
       const myEditedContactName = this.customer.value.contactName;
       const myContactTitle = this.customer.value.contactTitle;
@@ -164,7 +168,7 @@ export class MasterViewComponent implements OnInit {
 
   onDelete(): void {
     if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerId;
+      const myCustomerId = this.customer.value.customerID;
 
       if (myCustomerId !== null && myCustomerId !== undefined) {
         this.northwindService.deleteCustomer(myCustomerId).subscribe({
