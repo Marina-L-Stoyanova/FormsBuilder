@@ -54,6 +54,6 @@ class DataSource2Service {
         return null;
     }
    }
-} 
+}
 
 export const dataSource2Service: DataSource2Service = new DataSource2Service();
