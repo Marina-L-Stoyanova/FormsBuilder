@@ -65,10 +65,10 @@ export default class MasterView extends LitElement {
   public arguments: IgcRowSelectionEventArgs | undefined;
 
   private fetchCustomers(): void {
-    dataSource2Service.getCustomerDtoList().then(
-     data => this.dataSource2Customers = data,
-      error => this.dataSource2Customers = []
-    );
+    dataSource2Service.getCustomerDtoList().then((data) => {
+      this.northwindDS = data;
+      this.grid.data = data;
+    }, err => console.log(err));
   }
 
   private handleResponse(response: any): void {
@@ -110,7 +110,6 @@ export default class MasterView extends LitElement {
         }
       };
 
-      //TODO: The grid data is not updated until you reload the page - check this.fetchCustomers()
       dataSource2Service.updateCustomer(updatedCustomer).then(
         (response) => this.handleResponse(response),
         (error) => this.handleError(error)
@@ -145,7 +144,6 @@ export default class MasterView extends LitElement {
         }
       };
 
-      //TODO: The grid data is not updated until you reload the page - check this.fetchCustomers()
       dataSource2Service.addCustomer(updatedCustomer).then(
         (response) => this.handleResponse(response),
         (error) => this.handleError(error)
