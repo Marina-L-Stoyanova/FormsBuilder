@@ -1,6 +1,6 @@
 import 'igniteui-webcomponents-grids/grids/combined.js';
 import { IgcButtonComponent, IgcCheckboxComponent, IgcComboComponent, IgcDialogComponent, IgcInputComponent, IgcMaskInputComponent, IgcSelectComponent, IgcSnackbarComponent, IgcTextareaComponent, defineComponents } from "igniteui-webcomponents";
-import { IgcGridComponent } from 'igniteui-webcomponents-grids/grids';
+import { IgcGridComponent, IgcRowSelectionEventArgs } from 'igniteui-webcomponents-grids/grids';
 import { LitElement, css, html, nothing } from 'lit';
 import { customElement, eventOptions, query, state } from 'lit/decorators.js';
 import { CustomerDto } from '../models/DataSource2/customer-dto';
@@ -61,6 +61,9 @@ export default class MasterView extends LitElement {
   @state()
   public confirmText: string = '';
 
+  @state()
+  public arguments: IgcRowSelectionEventArgs | undefined;
+
   private fetchCustomers(): void {
     dataSource2Service.getCustomerDtoList().then(
      data => this.dataSource2Customers = data,
@@ -72,7 +75,7 @@ export default class MasterView extends LitElement {
     console.log('Operation successful:', response);
     this.fetchCustomers(); // Update customer list
     //this.resetForm();
-    //this.dialog.hide();
+    this.dialog.hide();
   }
 
   private handleError(error: any): void {
@@ -84,30 +87,19 @@ export default class MasterView extends LitElement {
     }
   }
 
-  handleRowSelection(args: any) {
-    this.confirmText = "Edit customer";
-    this.dialog.show();
+  onEditCustomer(): void {
+    const myCompanyName = (this.form?.elements.namedItem("companyName") as IgcInputComponent).value;
+    const myCustomerId = (this.form?.elements.namedItem("customerId") as IgcInputComponent).value;
+    const myContactName = (this.form?.elements.namedItem("contactName") as IgcInputComponent).value;
+    const myContactTitle = (this.form?.elements.namedItem("contactTitle") as IgcInputComponent).value;
 
-    const selectedRow = args.detail.newSelection;
-    const companyName = args.detail.newSelection[0].companyName;
-    const customerId = args.detail.newSelection[0].customerId;
-    const contactName = args.detail.newSelection[0].contactName;
-    const contactTitle = args.detail.newSelection[0].contactTitle;
-
-    (this.form?.elements.namedItem("companyName") as IgcInputComponent).value = companyName;
-    (this.form?.elements.namedItem("customerId") as IgcInputComponent).value = customerId;
-    (this.form?.elements.namedItem("contactName") as IgcInputComponent).value = contactName;
-    (this.form?.elements.namedItem("contactTitle") as IgcInputComponent).value = contactTitle;
-
-    console.log('Selected row:', selectedRow);
-
-    if (contactName !== undefined && contactName !== null && companyName !== undefined && contactTitle !== undefined &&
-      customerId !== undefined) {
+    if (myContactName !== undefined && myContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
+      myCustomerId !== undefined) {
       const updatedCustomer = {
-        customerId: customerId,
-        companyName: companyName,
-        contactName: contactName,
-        contactTitle: contactTitle,
+        customerId: myCustomerId,
+        companyName: myCompanyName,
+        contactName: myContactName,
+        contactTitle: myContactTitle,
         address: {
           city: '',
           country: '',
@@ -118,15 +110,73 @@ export default class MasterView extends LitElement {
         }
       };
 
+      //TODO: The grid data is not updated until you reload the page - check this.fetchCustomers()
       dataSource2Service.updateCustomer(updatedCustomer).then(
         (response) => this.handleResponse(response),
         (error) => this.handleError(error)
       );
     }
-   else {
-    // Handle invalid form state
-    this.errorMessage = 'Please provide valid data for all fields.';
+    else {
+      // Handle invalid form state
+      this.errorMessage = 'Please provide valid data for all fields.';
+    }
   }
+
+  onAddNewCustomer(): void {
+    const myCompanyName = (this.form?.elements.namedItem("companyName") as IgcInputComponent).value;
+    const myCustomerId = (this.form?.elements.namedItem("customerId") as IgcInputComponent).value;
+    const myContactName = (this.form?.elements.namedItem("contactName") as IgcInputComponent).value;
+    const myContactTitle = (this.form?.elements.namedItem("contactTitle") as IgcInputComponent).value;
+
+    if (myContactName !== undefined && myContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
+      myCustomerId !== undefined) {
+      const updatedCustomer = {
+        customerId: myCustomerId,
+        companyName: myCompanyName,
+        contactName: myContactName,
+        contactTitle: myContactTitle,
+        address: {
+          city: '',
+          country: '',
+          street: '',
+          region: '',
+          postalCode: '',
+          phone: ''
+        }
+      };
+
+      //TODO: The grid data is not updated until you reload the page - check this.fetchCustomers()
+      dataSource2Service.addCustomer(updatedCustomer).then(
+        (response) => this.handleResponse(response),
+        (error) => this.handleError(error)
+      );
+    }
+    else {
+      // Handle invalid form state
+      this.errorMessage = 'Please provide valid data for all fields.';
+    }
+  }
+
+
+  handleRowSelection(args: IgcRowSelectionEventArgs) {
+    this.confirmText = "Edit customer";
+    this.dialog.show();
+
+    const detailedArgs = args as any; // Using 'any' to bypass the type check
+    this.arguments = detailedArgs;
+
+    const selectedRow = detailedArgs.detail.newSelection[0];
+    const companyName = selectedRow.companyName;
+    const customerId = selectedRow.customerId;
+    const contactName = selectedRow.contactName;
+    const contactTitle = selectedRow.contactTitle;
+
+    (this.form?.elements.namedItem("companyName") as IgcInputComponent).value = companyName;
+    (this.form?.elements.namedItem("customerId") as IgcInputComponent).value = customerId;
+    (this.form?.elements.namedItem("contactName") as IgcInputComponent).value = contactName;
+    (this.form?.elements.namedItem("contactTitle") as IgcInputComponent).value = contactTitle;
+
+    console.log('Selected row:', selectedRow);
 }
 
   public onAddFormOpen(){
@@ -138,10 +188,10 @@ export default class MasterView extends LitElement {
   public onConfirm(): void{
 
     if(this.confirmText === 'Add customer') {
-        //this.onAddNewCustomer();
+      this.onAddNewCustomer();
     }
     else if(this.confirmText === 'Edit customer') {
-      //this.onEditCustomer();
+      this.onEditCustomer();
     }
   }
 
@@ -183,7 +233,6 @@ export default class MasterView extends LitElement {
           <igc-column field="address.city" data-type="string" header="address city" filterable="false" selectable="false"></igc-column>
           <igc-column field="address.country" data-type="string" header="address country" filterable="false" selectable="false"></igc-column>
         </igc-grid>
-        <igc-button @click="${this.onAddFormOpen}">Add new customer</button>
 
       <igc-dialog id="dialog" closeOnOutsideClick="true">
         <form id="form" @invalid="${this.invalidHandler}" method="dialog">
@@ -204,14 +253,7 @@ export default class MasterView extends LitElement {
         </form>
         <button igxButton @click="${this.onConfirm}">${this.confirmText}</button>
       </igc-dialog>
+      <igc-button @click="${this.onAddFormOpen}">Add new customer</button>
     `;
-  }
-
-  firstUpdated() {
-/*if (this.grid) {
-      this.grid.addEventListener("rowSelectionChanging", this.handleRowSelection);
-    } else {
-      console.error('Grid element not found');
-    } */
   }
 }
