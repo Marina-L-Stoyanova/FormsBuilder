@@ -20,6 +20,7 @@ export class MasterViewComponent implements OnInit {
   public confirmText: string = '';
   public confirmEvent: string = '';
   public isDeleteButtonHidden: boolean = false;
+  private originalCustomer: CustomersType | null = null;
 
   constructor(private northwindService: NorthwindService) {
     this.customer = new FormGroup<FormType<CustomersType>>({
@@ -47,11 +48,27 @@ export class MasterViewComponent implements OnInit {
 
   public handleRowSelection(event: IGridRowEventArgs) {
     if (event.row.data) {
+      this.originalCustomer = JSON.parse(JSON.stringify(event.row.data));
       this.customer.patchValue(event.row.data);
       this.dialogTitle = 'Edit customer';
       this.confirmText = 'Edit customer';
       this.confirmEvent = "onSubmit()";
       this.dialog.open();
+    }
+  }
+
+  public resetCustomer(): void {
+    if (this.originalCustomer) {
+      this.customer.patchValue(this.originalCustomer);
+      this.errorMessage = '';
+    }
+  }
+
+  public resetHandler(){
+    if (this.confirmText === 'Add customer') {
+      this.resetForm();
+    } else if (this.confirmText === 'Edit customer') {
+      this.resetCustomer();
     }
   }
 

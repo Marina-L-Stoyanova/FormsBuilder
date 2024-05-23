@@ -57,6 +57,7 @@
     <div igxDialogActions>
       <button igxButton class="alert" (click)="onDelete()" [hidden]="isDeleteButtonHidden">Delete customer</button>
       <button igxButton (click)="form.close()">CANCEL</button>
+      <button igxButton (click)="resetHandler()">Reset form</button>
       <button igxButton (click)="onConfirm()">{{confirmText}}</button>
     </div>
   </igx-dialog>
