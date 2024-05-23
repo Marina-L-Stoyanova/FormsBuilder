@@ -1,7 +1,7 @@
 import { IgrButton, IgrButtonModule, IgrDialog, IgrDialogModule, IgrInput, IgrInputModule, IgrTextareaModule } from "@infragistics/igniteui-react";
 import { IgrColumn, IgrGrid, IgrGridModule } from '@infragistics/igniteui-react-grids';
 import '@infragistics/igniteui-react-grids/grids';
-import { useReducer, useRef } from "react";
+import { useReducer, useRef, useState } from "react";
 import { useGetCustomerInputModelList } from '../hooks/north-wind-crud-hooks';
 import createClassTransformer from '../style-utils';
 import styles from './master-view.module.css';
@@ -18,6 +18,7 @@ export default function MasterView() {
   const dialogRef = useRef<IgrDialog>(null);
   const [, forceUpdate] = useReducer(x => x + 1, 0);
   const formElement = useRef<HTMLFormElement>(null);
+  let [confirmText, setConfirmText] = useState('');
 
   const next = () => {
     forceUpdate();
@@ -32,6 +33,30 @@ export default function MasterView() {
   const onDialogHide = () => {
     if (dialogRef.current) {
       dialogRef.current.hide();
+    }
+  };
+
+  const onAddFormOpen = () => {
+    //resetForm();
+    setConfirmText("Add customer");
+    if (dialogRef.current) {
+      dialogRef.current.show();
+    }
+  };
+
+  const onAddNewCustomer = () => {
+    // Handle confirm logic
+  };
+
+  const onEditCustomer = () => {
+    // Handle confirm logic
+  };
+
+  const onConfirm = () => {
+    if (confirmText === 'Add customer') {
+      onAddNewCustomer();
+    } else if (confirmText === 'Edit customer') {
+      onEditCustomer();
     }
   };
 
@@ -74,10 +99,10 @@ export default function MasterView() {
           </form>
           <div slot="footer">
             <IgrButton clicked={onDialogHide} variant="flat"><span>Cancel</span></IgrButton>
-            <IgrButton clicked={onDialogHide} variant="flat"><span>OK</span></IgrButton>
+            <IgrButton clicked={onConfirm} variant="flat"><span>{confirmText}</span></IgrButton>
           </div>
         </IgrDialog>
-        <IgrButton variant="contained" clicked={onDialogShow}>
+        <IgrButton variant="contained" clicked={onAddFormOpen}>
           <span>Add customer</span>
         </IgrButton>
       </div>
