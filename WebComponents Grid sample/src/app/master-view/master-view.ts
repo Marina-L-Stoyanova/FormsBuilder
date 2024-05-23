@@ -56,7 +56,7 @@ export default class MasterView extends LitElement {
   }
 
   public dataSource2Customers: CustomerDto[] = [];
-  public errorMessage:string = "";
+  public errorMessage:string = "";  
 
   @state()
   public confirmText: string = '';
@@ -155,6 +155,28 @@ export default class MasterView extends LitElement {
     }
   }
 
+  public resetCustomer(){
+    const customer = this.arguments as any;
+    const oldCustomer = customer.detail.newSelection[0];
+    const companyName = oldCustomer.companyName;
+    const customerId = oldCustomer.customerId;
+    const contactName = oldCustomer.contactName;
+    const contactTitle = oldCustomer.contactTitle;
+
+    (this.form?.elements.namedItem("companyName") as IgcInputComponent).value = companyName;
+    (this.form?.elements.namedItem("customerId") as IgcInputComponent).value = customerId;
+    (this.form?.elements.namedItem("contactName") as IgcInputComponent).value = contactName;
+    (this.form?.elements.namedItem("contactTitle") as IgcInputComponent).value = contactTitle;
+
+  }
+
+  public resetHandler(){
+    if (this.confirmText === 'Add customer') {
+      this.resetForm();
+    } else if (this.confirmText === 'Edit customer') {
+      this.resetCustomer();
+    }
+  }
 
   handleRowSelection(args: IgcRowSelectionEventArgs) {
     this.confirmText = "Edit customer";
@@ -199,12 +221,12 @@ export default class MasterView extends LitElement {
     }
   }
 
-  // TODO: This is currently causing validation messages at form opening!
   private resetForm(): void {
-    (this.form.elements.namedItem("customerId") as IgcInputComponent).value = '';
-    (this.form.elements.namedItem("companyName") as IgcInputComponent).value = '';
-    (this.form.elements.namedItem("contactName") as IgcInputComponent).value = '';
-    (this.form.elements.namedItem("contactTitle") as IgcInputComponent).value = '';
+    this.form.reset();
+  }
+
+  public closeDialog(){
+    this.dialog.hide();
   }
 
   constructor() {
@@ -248,10 +270,14 @@ export default class MasterView extends LitElement {
           <igc-input class="form-input" name="contactTitle" label="Contact title" placeholder="Contact title" required>
             ${(this.form?.elements.namedItem("contactTitle") as IgcInputComponent)?.validity.valueMissing ? html `<span slot="helper-text" class="helper-text">This field is required</span>` : nothing}
           </igc-input>
-        </form>
-        <button igxButton @click="${this.onConfirm}">${this.confirmText}</button>
+        </form>        
+        <igc-dialog-actions>
+          <igc-button @click="${this.closeDialog}">CANCEL</igc-button>
+          <igc-button @click="${this.resetHandler}">Reset form</igc-button>
+          <igc-button @click="${this.onConfirm}">${this.confirmText}</igc-button>
+        </igc-dialog-actions>
       </igc-dialog>
-      <igc-button @click="${this.onAddFormOpen}">Add new customer</button>
+      <igc-button @click="${this.onAddFormOpen}">Add new customer</igc-button>
     `;
   }
 }
