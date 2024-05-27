@@ -56,7 +56,7 @@ export default class MasterView extends LitElement {
   }
 
   public dataSource2Customers: CustomerDto[] = [];
-  public errorMessage:string = "";  
+  public errorMessage:string = "";
 
   @state()
   public confirmText: string = '';
@@ -270,7 +270,7 @@ export default class MasterView extends LitElement {
           <igc-input class="form-input" name="contactTitle" label="Contact title" placeholder="Contact title" required>
             ${(this.form?.elements.namedItem("contactTitle") as IgcInputComponent)?.validity.valueMissing ? html `<span slot="helper-text" class="helper-text">This field is required</span>` : nothing}
           </igc-input>
-        </form>        
+        </form>
         <igc-dialog-actions>
           <igc-button @click="${this.closeDialog}">CANCEL</igc-button>
           <igc-button @click="${this.resetHandler}">Reset form</igc-button>
