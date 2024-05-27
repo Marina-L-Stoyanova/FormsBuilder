@@ -1,0 +1,243 @@
+@page "/"
+@page "/master_view"
+@using Models.NorthwindRESTAPI
+@using NorthwindRESTAPI
+@using Newtonsoft.Json.Serialization;
+@inject INorthwindRESTAPIService NorthwindRESTAPIService
+
+@* CodeGen: CSS required for the under-input validation error messages to be colored *@
+<style>
+    .validation-message {
+        color: hsl(var(--ig-error-500));
+    }
+</style>
+
+<div class="row-layout master-view-container">
+    <div class="row-layout group">
+        <IgbGrid Data="@_northwindRESTAPIEmployeeDto" PrimaryKey="EmployeeId" DisplayDensity="DisplayDensity.Cosy" RowSelection="GridSelectionMode.Single" AutoGenerate="false"
+                 RowSelectionChanging="GridRowSelectionChanging" class="ig-typography grid" master_view-scope>
+            <IgbColumn Field="EmployeeId" DataType="GridColumnDataType.Number" Header="employeeId" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="FirstName" DataType="GridColumnDataType.String" Header="firstName" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="LastName" DataType="GridColumnDataType.String" Header="lastName" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="Title" DataType="GridColumnDataType.String" Header="title" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="HireDate" DataType="GridColumnDataType.Date" Header="hireDate" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="Address.Phone" DataType="GridColumnDataType.String" Header="address phone" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+            <IgbColumn Field="Address.Country" DataType="GridColumnDataType.String" Header="address country" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
+        </IgbGrid>
+    </div>
+</div>
+
+@* CodeGen: Should remove default OK button in rendered dialogs --> HideDefaultAction *@
+<IgbDialog @ref="dialog" HideDefaultAction>
+    @* NOTE: 1.OnValidSubmit="@HandleSubmit" - handler is fired for ANY button click!!! Fix this via setting <button type="button">
+    2. Button type=reset directly resets to Model empty default values/the initial model
+    3. NOTE: Two validation patterns
+        3.1 If we want component UI interaction red color for invalid, should add component properties aka. <IgbInput... MaxLength="15" MinLength="2" Required Blur="@OnBlur"...
+        3.2 If we want inline validation messages, should handle Blur="@OnBlur" adding a message there and an inline <ValidationMessage For="@(() => Model.FirstName)" />
+        3.3 Validation for LastName & Title is handled ONLY via Model attributes and visible on "HandleSubmit" Gray color messages by default.
+    *@
+    <EditForm EditContext="editContext" OnValidSubmit="@HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <IgbInput @bind-Value="Model.FirstName" Label="First Name" MaxLength="15" MinLength="2" Required Blur="@OnBlur" Outlined="true" class="user-input" master_view-scope></IgbInput>
+        <ValidationMessage For="() => Model.FirstName" />
+        <IgbInput @bind-Value="Model.LastName" Label="Last Name" Outlined="true" class="user-input" master_view-scope></IgbInput>
+        @* <ValidationMessage For="@(() => Model.LastName)" /> *@
+        <IgbInput @bind-Value="Model.Title" Label="Title" Outlined="true" class="user-input" master_view-scope></IgbInput>
+        @* <ValidationMessage For="@(() => Model.Title)" /> *@
+        <IgbDatePicker @bind-Value="Model.HireDate" Label="Hire Date" class="date-picker" master_view-scope></IgbDatePicker>
+        @* <ValidationMessage For="() => Model.HireDate" /> *@
+        <IgbInput DisplayType="InputType.Tel" @bind-Value="Model.Address.Phone" Label="Phone" Outlined="true" class="user-input" master_view-scope></IgbInput>
+        @* <ValidationMessage For="() => Model.Address.Phone" /> *@
+
+        @* IgbSelect should work after bug fixes ISSUE: https://infragistics.visualstudio.com/NetAdvantage/_workitems/edit/30935/ *@
+        @*<IgbSelect @bind-Value="Model.Address.Country" Outlined="true" Label="Country" class="user-input" master_view-scope>
+        @foreach (var address in _countriesDto)
+        {
+          string country = address.Country.ToString();
+          <IgbSelectItem Value="@country" Selected="@(Model.Address.Country == @country)">@country</IgbSelectItem>
+        }
+        </IgbSelect> *@
+
+        @* Note: IgbCombo @bind-Value will not work for the current scenario, as the combo works with an array of objects and the model we want to use is not an object in an array but Model.Address.Country*@
+        @* <IgbCombo Data="@_countriesDto" SingleSelect="true" @bind-Value="{ Model.Address.Country }" DisplayKey="Country" Outlined="true" class="single-select-combo" master_view-scope></IgbCombo>*@
+
+        @* Note: Example using Value & Change instead of @bind-Value *@
+        <IgbCombo Data="@_countriesDto" SingleSelect="true" Value="@ComboNoValueKeyValue()" DisplayKey="Country" Change="ComboNoValueKeyChange" Outlined="true" class="single-select-combo" master_view-scope></IgbCombo>
+
+        <br />
+        <button type="submit">Submit</button>
+        <button type="button" @onclick="ResetEmployee">Reset</button>
+        <button type="button" @onclick="ResetCloseForm">Cancel</button>
+    </EditForm>
+</IgbDialog>
+
+@code {
+    private IgbDialog dialog;
+    private List<EmployeeDto> _northwindRESTAPIEmployeeDto = new();
+    private List<AddressDto> _countriesDto = new();
+    private EditContext editContext;
+
+    private EmployeeDto? Model = new();
+    private EmployeeDto? cachedModel = new();
+    private ValidationMessageStore? messageStore;
+
+    string selectedCountry;
+
+    protected object[] ComboNoValueKeyValue()
+    {
+        if (Model.Address.Country != null)
+        {
+            return new object[] { Model.Address };
+        }
+
+        return Array.Empty<object>();
+    }
+
+    protected void ComboNoValueKeyChange(IgbComboChangeEventArgs e)
+    {
+        if (e.Detail.NewValue.Length != 0)
+        {
+            Model.Address.Country = ((AddressDto)e.Detail.NewValue.First()).Country;
+        }
+    }
+
+    // PROBLEM: Dialog animation starts close/open
+    private void ResetEmployee()
+    {
+        Model = DeepCopyJsonDotNet(cachedModel);
+        editContext = new(Model);
+    }
+
+    private void ResetCloseForm()
+    {
+        ResetEmployee();
+        dialog.HideAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        #region CodeGen: Whole obj int is not really needed. It can be done in the Model. Will generate the nested types with instantiation in the model via CodeGen!
+        // Alternative to initializing in the Address Model like this: public AddressDto Address { get; set; } = new();
+        // 1) Model.Address ??= new();
+
+        // 2) To initialize the whole object is a bulky but a valid option as well
+        // Not really needed to instantiate the whole object. Just the Employee and its nested types as Address
+        // Model = new EmployeeDto()
+        //     {
+        //         EmployeeId = 0,
+        //         LastName = "",
+        //         FirstName = "",
+        //         Title = "",
+        //         TitleOfCourtesy = "",
+        //         BirthDate = new DateTime(),
+        //         HireDate = new DateTime(),
+        //         AddressId = "",
+        //         Address = new AddressDto
+        //         {
+        //             Street = "",
+        //             City = "",
+        //             Region = "",
+        //             PostalCode = "",
+        //             Country = "",
+        //             Phone = ""
+        //         },
+        //         Notes = "",
+        //         AvatarUrl = "",
+        //         ReportsTo = 0
+        //     };
+        #endregion
+
+        // Note: An important point to make is that it is considered NOT a GOOD PRACTICE to change out the EditContext model for another object, once created.
+        editContext = new(Model);
+        editContext.OnValidationRequested += HandleValidationRequested;
+        messageStore = new(editContext);
+        base.OnInitialized();
+    }
+
+    public void GridRowSelectionChanging(IgbRowSelectionEventArgs e)
+    {
+        // CodeGen: [ResetForm]Grid Data re-instantiating is required, in order to notify the grid it should not persist it's own edited data. //Issue repro: Model = (EmployeeDto)e.Detail.NewSelection.FirstOrDefault();
+        Model = DeepCopyJsonDotNet((EmployeeDto)e.Detail.NewSelection.FirstOrDefault());
+
+        // PROBLEM: This causes OnBlur/under-input text message to not show: <div class="validation-message">OnBlur Name must be at least 2 characters long.</div>
+        // Should either find alternative to the new instance being used, or find a way to dynamically set the validation, instead of declaratively, as it is lost at this point because of editContext recreation]
+        editContext = new(Model);
+
+        //2) Save the cur model for the form reset, using serialize/deserialize, as object clone/deep copy in C# requires a bunch of excess code
+        // https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-8.0#code-try-1
+        cachedModel = DeepCopyJsonDotNet(Model);
+        dialog.ShowAsync();
+    }
+
+    async Task HandleSubmit()
+    {
+        Console.WriteLine("HandleSubmit");
+        // TODO: DO NOT POST if values are not changed(yet still valid)
+        // PROBLEM: editContext.IsModified() is not updated and always comes as false. ISSUE: https://infragistics.visualstudio.com/NetAdvantage/_workitems/edit/31408/
+        // if (editContext.IsModified())
+        // {
+        // Make POST request with updated Employee data to the Northwind API endpoint
+            this.PostEmployee(Model);
+        // }
+        return;
+    }
+
+    public static T DeepCopyJsonDotNet<T>(T input)
+    {
+        var serialized = Newtonsoft.Json.JsonConvert.SerializeObject(input);
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(serialized);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList();
+        _countriesDto = await NorthwindRESTAPIService.GetCountriesDtoList();
+        await base.OnInitializedAsync();
+    }
+
+    private async void PostEmployee(EmployeeDto editedEmployee)
+    {
+        var result = await NorthwindRESTAPIService.PutEmployee(editedEmployee);
+        if (result != null)
+        {
+            UpdateComponents();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private async void UpdateComponents()
+    {
+        // Fetch updated endpoint data or reuse local data on fail //resetting to _northwindRESTAPIEmployeeDto may NOT be NEEDED in the end
+        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList() ?? _northwindRESTAPIEmployeeDto;
+        // Update the grid with the new response records
+        StateHasChanged();
+        // Close form dialog
+        await dialog.HideAsync();
+    }
+
+    private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
+    {
+        messageStore?.Clear();
+
+        if (string.IsNullOrWhiteSpace(Model.FirstName) || Model.FirstName.Length < 3)
+        {
+            messageStore?.Add(() => Model.FirstName, "FirstName must be at least 2 characters long.");
+        }
+    }
+
+    public void OnBlur()
+    {
+        messageStore?.Clear();
+
+        if (string.IsNullOrWhiteSpace(Model.FirstName) || Model.FirstName.Length < 2)
+        {
+            messageStore?.Add(() => Model.FirstName, "Name must be at least 2 characters long.");
+        }
+
+        Console.WriteLine($"FirstName = {Model?.FirstName} LastName = {Model?.LastName}");
+    }
+}
