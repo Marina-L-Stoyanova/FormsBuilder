@@ -254,7 +254,7 @@ export default class MasterView extends LitElement {
           <igc-column field="address.country" data-type="string" header="address country" filterable="false" selectable="false"></igc-column>
         </igc-grid>
 
-      <igc-dialog id="dialog" closeOnOutsideClick="true">
+      <igc-dialog id="dialog" closeOnOutsideClick="true" title="${this.confirmText}">
         <form id="form" @invalid="${this.invalidHandler}" method="dialog">
           <igc-input class="form-input" id="customerId" name="customerId" label="Customer ID" placeholder="Customer ID">
               <span slot="helper-text" class="helper-text"></span>
@@ -271,11 +271,9 @@ export default class MasterView extends LitElement {
             ${(this.form?.elements.namedItem("contactTitle") as IgcInputComponent)?.validity.valueMissing ? html `<span slot="helper-text" class="helper-text">This field is required</span>` : nothing}
           </igc-input>
         </form>
-        <igc-dialog-actions>
-          <igc-button @click="${this.closeDialog}">CANCEL</igc-button>
-          <igc-button @click="${this.resetHandler}">Reset form</igc-button>
-          <igc-button @click="${this.onConfirm}">${this.confirmText}</igc-button>
-        </igc-dialog-actions>
+          <igc-button slot="footer" @click="${this.closeDialog}">CANCEL</igc-button>
+          <igc-button slot="footer" @click="${this.resetHandler}">Reset form</igc-button>
+          <igc-button slot="footer" @click="${this.onConfirm}">${this.confirmText}</igc-button>
       </igc-dialog>
       <igc-button @click="${this.onAddFormOpen}">Add new customer</igc-button>
     `;
