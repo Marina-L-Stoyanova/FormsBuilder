@@ -1,0 +1,23 @@
+.row-layout {
+  display: flex;
+}
+.master-view-container {
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  height: 100%;
+}
+.user-input {
+  height: max-content;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+.checkbox {
+  width: max-content;
+  height: max-content;
+}
+.textarea {
+  height: max-content;
+  min-width: min-content;
+  flex-shrink: 0;
+}
