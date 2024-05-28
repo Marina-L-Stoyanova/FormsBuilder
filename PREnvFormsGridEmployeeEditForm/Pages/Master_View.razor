@@ -10,6 +10,10 @@
     .validation-message {
         color: hsl(var(--ig-error-500));
     }
+
+    /* Optionally handle dialog size so it does not enlarge when validation messages appear */
+    .igb-web-dialog {
+    }
 </style>
 
 <div class="row-layout master-view-container">
@@ -32,13 +36,14 @@
     @* NOTE: 1.OnValidSubmit="@HandleSubmit" - handler is fired for ANY button click!!! Fix this via setting <button type="button">
     2. Button type=reset directly resets to Model empty default values/the initial model
     3. NOTE: Two validation patterns
-        3.1 If we want component UI interaction red color for invalid, should add component properties aka. <IgbInput... MaxLength="15" MinLength="2" Required Blur="@OnBlur"...
-        3.2 If we want inline validation messages, should handle Blur="@OnBlur" adding a message there and an inline <ValidationMessage For="@(() => Model.FirstName)" />
-        3.3 Validation for LastName & Title is handled ONLY via Model attributes and visible on "HandleSubmit" Gray color messages by default.
+    3.1 If we want component UI interaction red color for invalid, should add component properties aka. <IgbInput... MaxLength="15" MinLength="2" Required Blur="@OnBlur"...
+    3.2 If we want inline validation messages, should handle Blur="@OnBlur" adding a message there and an inline <ValidationMessage For="@(() => Model.FirstName)" />
+    3.3 Validation for LastName & Title is handled ONLY via Model attributes and visible on "HandleSubmit" Gray color messages by default.
     *@
     <EditForm EditContext="editContext" OnValidSubmit="@HandleSubmit">
         <DataAnnotationsValidator />
         <ValidationSummary />
+
         <IgbInput @bind-Value="Model.FirstName" Label="First Name" MaxLength="15" MinLength="2" Required Blur="@OnBlur" Outlined="true" class="user-input" master_view-scope></IgbInput>
         <ValidationMessage For="() => Model.FirstName" />
         <IgbInput @bind-Value="Model.LastName" Label="Last Name" Outlined="true" class="user-input" master_view-scope></IgbInput>
@@ -54,8 +59,8 @@
         @*<IgbSelect @bind-Value="Model.Address.Country" Outlined="true" Label="Country" class="user-input" master_view-scope>
         @foreach (var address in _countriesDto)
         {
-          string country = address.Country.ToString();
-          <IgbSelectItem Value="@country" Selected="@(Model.Address.Country == @country)">@country</IgbSelectItem>
+        string country = address.Country.ToString();
+        <IgbSelectItem Value="@country" Selected="@(Model.Address.Country == @country)">@country</IgbSelectItem>
         }
         </IgbSelect> *@
 
@@ -73,16 +78,51 @@
 </IgbDialog>
 
 @code {
+    #region Common for all options
+
+    private EditContext editContext;
+    private EmployeeDto? Model = new();
+    private EmployeeDto? cachedModel = new();
     private IgbDialog dialog;
     private List<EmployeeDto> _northwindRESTAPIEmployeeDto = new();
     private List<AddressDto> _countriesDto = new();
-    private EditContext editContext;
-
-    private EmployeeDto? Model = new();
-    private EmployeeDto? cachedModel = new();
-    private ValidationMessageStore? messageStore;
-
     string selectedCountry;
+
+    public static T DeepCopyJsonDotNet<T>(T input)
+    {
+        var serialized = Newtonsoft.Json.JsonConvert.SerializeObject(input);
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(serialized);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList();
+        _countriesDto = await NorthwindRESTAPIService.GetCountriesDtoList();
+        await base.OnInitializedAsync();
+    }
+
+    private async void PostEmployee(EmployeeDto editedEmployee)
+    {
+        var result = await NorthwindRESTAPIService.PutEmployee(editedEmployee);
+        if (result != null)
+        {
+            UpdateComponents();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private async void UpdateComponents()
+    {
+        // Fetch updated endpoint data or reuse local data on fail //resetting to _northwindRESTAPIEmployeeDto may NOT be NEEDED in the end
+        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList() ?? _northwindRESTAPIEmployeeDto;
+        // Update the grid with the new response records
+        StateHasChanged();
+        // Close form dialog
+        await dialog.HideAsync();
+    }
 
     protected object[] ComboNoValueKeyValue()
     {
@@ -102,18 +142,16 @@
         }
     }
 
-    // PROBLEM: Dialog animation starts close/open
-    private void ResetEmployee()
-    {
-        Model = DeepCopyJsonDotNet(cachedModel);
-        editContext = new(Model);
-    }
-
     private void ResetCloseForm()
     {
         ResetEmployee();
         dialog.HideAsync();
     }
+    #endregion Common
+
+    #region Option1: Less code. New editContext instance in GridRowSelectionChanging. Validation onblur is lost due to new editContext instance used(no model attributes requred)
+
+    private ValidationMessageStore? messageStore;
 
     protected override void OnInitialized()
     {
@@ -162,7 +200,7 @@
 
         // PROBLEM: This causes OnBlur/under-input text message to not show: <div class="validation-message">OnBlur Name must be at least 2 characters long.</div>
         // Should either find alternative to the new instance being used, or find a way to dynamically set the validation, instead of declaratively, as it is lost at this point because of editContext recreation]
-        editContext = new(Model);
+        editContext = new(Model); // !! OnBlur/under-input validation fails to show as it is not transferred to the new context
 
         //2) Save the cur model for the form reset, using serialize/deserialize, as object clone/deep copy in C# requires a bunch of excess code
         // https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-8.0#code-try-1
@@ -178,45 +216,18 @@
         // if (editContext.IsModified())
         // {
         // Make POST request with updated Employee data to the Northwind API endpoint
-            this.PostEmployee(Model);
+        this.PostEmployee(Model);
         // }
         return;
     }
 
-    public static T DeepCopyJsonDotNet<T>(T input)
-    {
-        var serialized = Newtonsoft.Json.JsonConvert.SerializeObject(input);
-        return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(serialized);
-    }
 
-    protected override async Task OnInitializedAsync()
+    // PROBLEM: Dialog animation starts close/open
+    private void ResetEmployee()
     {
-        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList();
-        _countriesDto = await NorthwindRESTAPIService.GetCountriesDtoList();
-        await base.OnInitializedAsync();
-    }
-
-    private async void PostEmployee(EmployeeDto editedEmployee)
-    {
-        var result = await NorthwindRESTAPIService.PutEmployee(editedEmployee);
-        if (result != null)
-        {
-            UpdateComponents();
-        }
-        else
-        {
-            // TODO: handle errors here.
-        }
-    }
-
-    private async void UpdateComponents()
-    {
-        // Fetch updated endpoint data or reuse local data on fail //resetting to _northwindRESTAPIEmployeeDto may NOT be NEEDED in the end
-        _northwindRESTAPIEmployeeDto = await NorthwindRESTAPIService.GetEmployeeDtoList() ?? _northwindRESTAPIEmployeeDto;
-        // Update the grid with the new response records
-        StateHasChanged();
-        // Close form dialog
-        await dialog.HideAsync();
+        Model = DeepCopyJsonDotNet(cachedModel);
+        editContext = new(Model); // if missing, validation on submit fails tracking its state. Repro: Delete LastName to invalid/Submit/Reset/Still invalid.
+        // editContext.NotifyValidationStateChanged(); // Seems not enough to replace editContext = new(Model); on its own.
     }
 
     private void HandleValidationRequested(object? sender, ValidationRequestedEventArgs args)
@@ -238,6 +249,176 @@
             messageStore?.Add(() => Model.FirstName, "Name must be at least 2 characters long.");
         }
 
-        Console.WriteLine($"FirstName = {Model?.FirstName} LastName = {Model?.LastName}");
+        Console.WriteLine($"FirstName = {Model?.FirstName} ; LastName = {Model?.LastName}");
     }
+    #endregion
+
+    #region Option2: Utilize NotifyValidationStateChanged & NotifyFieldChanged: Works with both validation messages types yet duplicated(requires firstName model validation attributes being set)
+    // private bool formSubmitted = false;
+
+    // protected override void OnInitialized()
+    // {
+    //     editContext = new EditContext(Model);
+    // }
+
+    // private async Task HandleSubmit()
+    // {
+    //     formSubmitted = true;
+    //     if (editContext.Validate())
+    //     {
+    //         this.PostEmployee(Model);
+    //     }
+    //     formSubmitted = false;
+    // }
+
+    // private void ResetEmployee()
+    // {
+    //     Model = DeepCopyJsonDotNet(cachedModel);
+    //     editContext = new EditContext(Model); // Recreate EditContext with new model, so submit messages work as expected
+    //     formSubmitted = false;
+    //     editContext.NotifyValidationStateChanged();
+    // }
+
+    // private void OnBlur()
+    // {
+    //     if (!formSubmitted)
+    //     {
+    //         var fieldIdentifier = FieldIdentifier.Create(() => Model.FirstName);
+    //         editContext.NotifyFieldChanged(fieldIdentifier);
+    //     }
+    // }
+
+    // public void GridRowSelectionChanging(IgbRowSelectionEventArgs e)
+    // {
+    //     var selectedEmployee = (EmployeeDto)e.Detail.NewSelection.FirstOrDefault();
+
+    //     if (selectedEmployee != null)
+    //     {
+    //         // Update existing Model properties
+    //         Model.EmployeeId = selectedEmployee.EmployeeId;
+    //         Model.FirstName = selectedEmployee.FirstName;
+    //         Model.LastName = selectedEmployee.LastName;
+    //         Model.Title = selectedEmployee.Title;
+    //         Model.TitleOfCourtesy = selectedEmployee.TitleOfCourtesy;
+    //         Model.BirthDate = selectedEmployee.BirthDate;
+    //         Model.HireDate = selectedEmployee.HireDate;
+    //         Model.AddressId = selectedEmployee.AddressId;
+    //         // Model.Address = selectedEmployee.Address;
+    //         Model.Notes = selectedEmployee.Notes;
+    //         Model.AvatarUrl = selectedEmployee.AvatarUrl;
+    //         Model.ReportsTo = selectedEmployee.ReportsTo;
+
+    //         //Model.Address
+    //         Model.Address.PostalCode = selectedEmployee.Address.PostalCode;
+    //         Model.Address.Phone = selectedEmployee.Address.Phone;
+    //         Model.Address.Street = selectedEmployee.Address.Street;
+    //         Model.Address.City = selectedEmployee.Address.City;
+    //         Model.Address.Region = selectedEmployee.Address.Region;
+    //         Model.Address.Country = selectedEmployee.Address.Country;
+
+    //         editContext.NotifyValidationStateChanged();
+    //         // Optionally, if you need to reset validation state
+    //         editContext.MarkAsUnmodified();
+    //         // Notify that the validation state has changed
+    //         editContext.NotifyValidationStateChanged();
+    //     }
+
+    //     cachedModel = DeepCopyJsonDotNet(Model);
+    //     dialog.ShowAsync();
+    // }
+
+    #endregion
+
+    #region Option3: Utilize ValidationMessageStore & NotifyValidationStateChanged: Works with both validation messages but duplicated(no model attributes requred)
+    // private ValidationMessageStore messageStore;
+
+    // protected override void OnInitialized()
+    // {
+    //     editContext = new EditContext(Model);
+    //     messageStore = new ValidationMessageStore(editContext);
+    // }
+
+    // private async Task HandleSubmit()
+    // {
+    //     ClearValidationMessages();
+    //     if (string.IsNullOrWhiteSpace(Model.FirstName))
+    //     {
+    //         messageStore.Add(() => Model.FirstName, "First Name is required.");
+    //         editContext.NotifyValidationStateChanged();
+    //     }
+    //     else if (Model.FirstName.Length < 2 || Model.FirstName.Length > 15)
+    //     {
+    //         messageStore.Add(() => Model.FirstName, "First Name must be between 2 and 15 characters.");
+    //         editContext.NotifyValidationStateChanged();
+    //     }
+    //     else
+    //     {
+    //         // Handle valid form submission
+    //         PostEmployee(Model);
+    //     }
+    // }
+
+    // private void ResetEmployee()
+    // {
+    //     Model = DeepCopyJsonDotNet(cachedModel);
+    //     editContext = new EditContext(Model); // Recreate EditContext with new model
+    //     messageStore = new ValidationMessageStore(editContext);
+    //     editContext.NotifyValidationStateChanged();
+    // }
+
+    // private void OnBlur()
+    // {
+    //     ClearValidationMessages();
+    //     if (string.IsNullOrWhiteSpace(Model.FirstName) || Model.FirstName.Length < 2)
+    //     {
+    //         messageStore.Add(() => Model.FirstName, "First Name must be at least 2 characters long.");
+    //     }
+    //     editContext.NotifyValidationStateChanged();
+    // }
+
+    // private void ClearValidationMessages()
+    // {
+    //     messageStore.Clear();
+    //     editContext.NotifyValidationStateChanged();
+    // }
+
+    // public void GridRowSelectionChanging(IgbRowSelectionEventArgs e)
+    // {
+    //     var selectedEmployee = (EmployeeDto)e.Detail.NewSelection.FirstOrDefault();
+
+    //     if (selectedEmployee != null)
+    //     {
+    //         // Update existing Model properties
+    //         Model.EmployeeId = selectedEmployee.EmployeeId;
+    //         Model.FirstName = selectedEmployee.FirstName;
+    //         Model.LastName = selectedEmployee.LastName;
+    //         Model.Title = selectedEmployee.Title;
+    //         Model.TitleOfCourtesy = selectedEmployee.TitleOfCourtesy;
+    //         Model.BirthDate = selectedEmployee.BirthDate;
+    //         Model.HireDate = selectedEmployee.HireDate;
+    //         Model.AddressId = selectedEmployee.AddressId;
+    //         Model.Notes = selectedEmployee.Notes;
+    //         Model.AvatarUrl = selectedEmployee.AvatarUrl;
+    //         Model.ReportsTo = selectedEmployee.ReportsTo;
+
+    //         Model.Address.PostalCode = selectedEmployee.Address.PostalCode;
+    //         Model.Address.Phone = selectedEmployee.Address.Phone;
+    //         Model.Address.Street = selectedEmployee.Address.Street;
+    //         Model.Address.City = selectedEmployee.Address.City;
+    //         Model.Address.Region = selectedEmployee.Address.Region;
+    //         Model.Address.Country = selectedEmployee.Address.Country;
+
+    //         editContext = new EditContext(Model);
+    //         messageStore = new ValidationMessageStore(editContext);
+    //         editContext.NotifyValidationStateChanged();
+    //     }
+
+    //     cachedModel = DeepCopyJsonDotNet(Model);
+    //     dialog.ShowAsync();
+    // }
+
+    #endregion
+
+
+
 }
