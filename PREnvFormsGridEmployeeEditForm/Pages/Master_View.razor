@@ -3,6 +3,7 @@
 @using Models.NorthwindRESTAPI
 @using NorthwindRESTAPI
 @using Newtonsoft.Json.Serialization;
+@* @using System.Text.RegularExpressions @*Uncomment for Option3 *@
 @inject INorthwindRESTAPIService NorthwindRESTAPIService
 
 @* CodeGen: CSS required for the under-input validation error messages to be colored *@
@@ -53,7 +54,7 @@
         <IgbDatePicker @bind-Value="Model.HireDate" Label="Hire Date" class="date-picker" master_view-scope></IgbDatePicker>
         @* <ValidationMessage For="() => Model.HireDate" /> *@
         <IgbInput DisplayType="InputType.Tel" @bind-Value="Model.Address.Phone" Label="Phone" Outlined="true" class="user-input" master_view-scope></IgbInput>
-        @* <ValidationMessage For="() => Model.Address.Phone" /> *@
+        @* <ValidationMessage For="() => Model.Address.Phone" />  Uncomment for option3 - does not seem to work*@
 
         @* IgbSelect should work after bug fixes ISSUE: https://infragistics.visualstudio.com/NetAdvantage/_workitems/edit/30935/ *@
         @*<IgbSelect @bind-Value="Model.Address.Country" Outlined="true" Label="Country" class="user-input" master_view-scope>
@@ -195,12 +196,35 @@
 
     public void GridRowSelectionChanging(IgbRowSelectionEventArgs e)
     {
-        // CodeGen: [ResetForm]Grid Data re-instantiating is required, in order to notify the grid it should not persist it's own edited data. //Issue repro: Model = (EmployeeDto)e.Detail.NewSelection.FirstOrDefault();
-        Model = DeepCopyJsonDotNet((EmployeeDto)e.Detail.NewSelection.FirstOrDefault());
+        // Model = DeepCopyJsonDotNet((EmployeeDto)e.Detail.NewSelection.FirstOrDefault());
+        // PROBLEM: This new instanciation causes OnBlur/under-input text message to not show as it is not transferred to the new context
+        // editContext = new(Model);
+        // CodeGen: The only solution to the above, is to iterate each of the Model properties and assign these explicitly!
+        var selectedEmployee = (EmployeeDto)e.Detail.NewSelection.FirstOrDefault();
 
-        // PROBLEM: This causes OnBlur/under-input text message to not show: <div class="validation-message">OnBlur Name must be at least 2 characters long.</div>
-        // Should either find alternative to the new instance being used, or find a way to dynamically set the validation, instead of declaratively, as it is lost at this point because of editContext recreation]
-        editContext = new(Model); // !! OnBlur/under-input validation fails to show as it is not transferred to the new context
+        // Update existing Model properties
+        Model.EmployeeId = selectedEmployee.EmployeeId;
+        Model.FirstName = selectedEmployee.FirstName;
+        Model.LastName = selectedEmployee.LastName;
+        Model.Title = selectedEmployee.Title;
+        Model.TitleOfCourtesy = selectedEmployee.TitleOfCourtesy;
+        Model.BirthDate = selectedEmployee.BirthDate;
+        Model.HireDate = selectedEmployee.HireDate;
+        Model.AddressId = selectedEmployee.AddressId;
+        Model.Notes = selectedEmployee.Notes;
+        Model.AvatarUrl = selectedEmployee.AvatarUrl;
+        Model.ReportsTo = selectedEmployee.ReportsTo;
+
+        Model.Address.PostalCode = selectedEmployee.Address.PostalCode;
+        Model.Address.Phone = selectedEmployee.Address.Phone;
+        Model.Address.Street = selectedEmployee.Address.Street;
+        Model.Address.City = selectedEmployee.Address.City;
+        Model.Address.Region = selectedEmployee.Address.Region;
+        Model.Address.Country = selectedEmployee.Address.Country;
+
+        editContext = new EditContext(Model);
+        messageStore = new ValidationMessageStore(editContext);
+        editContext.NotifyValidationStateChanged();
 
         //2) Save the cur model for the form reset, using serialize/deserialize, as object clone/deep copy in C# requires a bunch of excess code
         // https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-8.0#code-try-1
@@ -220,7 +244,6 @@
         // }
         return;
     }
-
 
     // PROBLEM: Dialog animation starts close/open
     private void ResetEmployee()
@@ -303,7 +326,6 @@
     //         Model.BirthDate = selectedEmployee.BirthDate;
     //         Model.HireDate = selectedEmployee.HireDate;
     //         Model.AddressId = selectedEmployee.AddressId;
-    //         // Model.Address = selectedEmployee.Address;
     //         Model.Notes = selectedEmployee.Notes;
     //         Model.AvatarUrl = selectedEmployee.AvatarUrl;
     //         Model.ReportsTo = selectedEmployee.ReportsTo;
@@ -319,7 +341,6 @@
     //         editContext.NotifyValidationStateChanged();
     //         // Optionally, if you need to reset validation state
     //         editContext.MarkAsUnmodified();
-    //         // Notify that the validation state has changed
     //         editContext.NotifyValidationStateChanged();
     //     }
 
@@ -341,19 +362,11 @@
     // private async Task HandleSubmit()
     // {
     //     ClearValidationMessages();
-    //     if (string.IsNullOrWhiteSpace(Model.FirstName))
+    //     ValidateFirstName();
+    //     ValidatePhoneNumber();
+
+    //     if (editContext.Validate())
     //     {
-    //         messageStore.Add(() => Model.FirstName, "First Name is required.");
-    //         editContext.NotifyValidationStateChanged();
-    //     }
-    //     else if (Model.FirstName.Length < 2 || Model.FirstName.Length > 15)
-    //     {
-    //         messageStore.Add(() => Model.FirstName, "First Name must be between 2 and 15 characters.");
-    //         editContext.NotifyValidationStateChanged();
-    //     }
-    //     else
-    //     {
-    //         // Handle valid form submission
     //         PostEmployee(Model);
     //     }
     // }
@@ -369,11 +382,26 @@
     // private void OnBlur()
     // {
     //     ClearValidationMessages();
-    //     if (string.IsNullOrWhiteSpace(Model.FirstName) || Model.FirstName.Length < 2)
-    //     {
-    //         messageStore.Add(() => Model.FirstName, "First Name must be at least 2 characters long.");
-    //     }
+    //     ValidateFirstName();
+    //     ValidatePhoneNumber();
     //     editContext.NotifyValidationStateChanged();
+    // }
+
+    // private void ValidateFirstName()
+    // {
+    //     if (string.IsNullOrWhiteSpace(Model.FirstName) || Model.FirstName.Length < 2 || Model.FirstName.Length > 15)
+    //     {
+    //         messageStore.Add(() => Model.FirstName, "First Name must be between 2 and 15 characters long.");
+    //     }
+    // }
+
+    // private void ValidatePhoneNumber()
+    // {
+    //     var phonePattern = @"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$";
+    //     if (string.IsNullOrWhiteSpace(Model.Address.Phone) || !Regex.IsMatch(Model.Address.Phone, phonePattern))
+    //     {
+    //         messageStore.Add(() => Model.Address.Phone, "Enter a valid phone number.");
+    //     }
     // }
 
     // private void ClearValidationMessages()
