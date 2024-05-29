@@ -215,6 +215,7 @@
         Model.AvatarUrl = selectedEmployee.AvatarUrl;
         Model.ReportsTo = selectedEmployee.ReportsTo;
 
+        Model.Address = new AddressDto();
         Model.Address.PostalCode = selectedEmployee.Address.PostalCode;
         Model.Address.Phone = selectedEmployee.Address.Phone;
         Model.Address.Street = selectedEmployee.Address.Street;
