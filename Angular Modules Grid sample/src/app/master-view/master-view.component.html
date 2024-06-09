@@ -9,9 +9,17 @@
       [selectable]="false"></igx-column>
     <igx-column field="contactTitle" dataType="string" header="contactTitle" [filterable]="false"
       [selectable]="false"></igx-column>
+      <igx-column field="address.region" dataType="string" header="address region" [filterable]="false"
+      [selectable]="false"></igx-column>
     <igx-column field="address.city" dataType="string" header="address city" [filterable]="false"
       [selectable]="false"></igx-column>
+    <igx-column field="address.street" dataType="string" header="address street" [filterable]="false"
+      [selectable]="false"></igx-column>
+    <igx-column field="address.postalCode" dataType="string" header="address postal code" [filterable]="false"
+      [selectable]="false"></igx-column>
     <igx-column field="address.country" dataType="string" header="address country" [filterable]="false"
+      [selectable]="false"></igx-column>
+    <igx-column field="address.phone" dataType="string" header="address phone" [filterable]="false"
       [selectable]="false"></igx-column>
   </igx-grid>
   <button igxButton="contained" igxRipple="white" (click)="onFormOpen()">Add new customer</button>
@@ -25,7 +33,7 @@
     <form class="input-group-form" [formGroup]="customer" (ngSubmit)="onAddNewCustomer()">
       <div class="column-layout group">
         <igx-input-group type="border" class="ig-typography__body-1 textarea">
-          <input name="customerId" type="text" formControlName="customerID" igxInput />
+          <input name="customerId" type="text" formControlName="customerId" igxInput />
           <label igxLabel for="customerId">Customer ID</label>
         </igx-input-group>
         <igx-input-group type="border" class="ig-typography__body-1 textarea">
@@ -42,12 +50,28 @@
         </igx-input-group>
         <div [formGroup]="customer.controls.address">
           <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="region" type="text" formControlName="region" igxInput />
+            <label igxLabel for="region">Region</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
             <input name="city" type="text" formControlName="city" igxInput />
             <label igxLabel for="city">City</label>
           </igx-input-group>
           <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="street" type="text" formControlName="street" igxInput />
+            <label igxLabel for="street">Street</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="postalCode" type="text" formControlName="postalCode" igxInput />
+            <label igxLabel for="postalCode">Postal code</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
             <input name="country" type="text" formControlName="country" igxInput />
             <label igxLabel for="country">Country</label>
+          </igx-input-group>
+          <igx-input-group type="border" class="ig-typography__body-1 textarea">
+            <input name="phone" type="text" formControlName="phone" igxInput />
+            <label igxLabel for="phone">Phone</label>
           </igx-input-group>
         </div>
         <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
