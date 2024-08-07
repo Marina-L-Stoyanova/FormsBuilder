@@ -17,9 +17,9 @@
     }
 </style>
 
-<div class="row-layout master-view-container">
+<div class="column-layout master-view-container">
     <div class="row-layout group">
-        <IgbGrid Data="@_northwindRESTAPIEmployeeDto" PrimaryKey="EmployeeId" DisplayDensity="DisplayDensity.Cosy" RowSelection="GridSelectionMode.Single" AutoGenerate="false"
+        <IgbGrid @ref="grid" Data="@_northwindRESTAPIEmployeeDto" PrimaryKey="EmployeeId" DisplayDensity="DisplayDensity.Cosy" RowSelection="GridSelectionMode.Single" AutoGenerate="false"
                  RowSelectionChanging="GridRowSelectionChanging" class="ig-typography grid" master_view-scope>
             <IgbColumn Field="EmployeeId" DataType="GridColumnDataType.Number" Header="employeeId" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
             <IgbColumn Field="FirstName" DataType="GridColumnDataType.String" Header="firstName" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
@@ -30,10 +30,11 @@
             <IgbColumn Field="Address.Country" DataType="GridColumnDataType.String" Header="address country" Sortable="true" Filterable="false" Selectable="false"></IgbColumn>
         </IgbGrid>
     </div>
+    <IgbButton class="row-layout" @onclick="Add">Add new Employee</IgbButton>
 </div>
 
 @* CodeGen: Should remove default OK button in rendered dialogs --> HideDefaultAction *@
-<IgbDialog @ref="dialog" HideDefaultAction>
+<IgbDialog @ref="dialog" HideDefaultAction Title="@dialogTitle">
     @* NOTE: 1.OnValidSubmit="@HandleSubmit" - handler is fired for ANY button click!!! Fix this via setting <button type="button">
     2. Button type=reset directly resets to Model empty default values/the initial model
     3. NOTE: Two validation patterns
@@ -75,6 +76,10 @@
         <button type="submit">Submit</button>
         <button type="button" @onclick="ResetEmployee">Reset</button>
         <button type="button" @onclick="ResetCloseForm">Cancel</button>
+        @if (dialogTitle == "Edit Employee")
+        {
+            <button type="button" @onclick="DeleteCloseForm">Delete</button>
+        }
     </EditForm>
 </IgbDialog>
 
@@ -85,9 +90,11 @@
     private EmployeeDto? Model = new();
     private EmployeeDto? cachedModel = new();
     private IgbDialog dialog;
+    private IgbGrid grid;
     private List<EmployeeDto> _northwindRESTAPIEmployeeDto = new();
     private List<AddressDto> _countriesDto = new();
     string selectedCountry;
+    string dialogTitle = "Edit Employee";
 
     public static T DeepCopyJsonDotNet<T>(T input)
     {
@@ -102,9 +109,50 @@
         await base.OnInitializedAsync();
     }
 
-    private async void PostEmployee(EmployeeDto editedEmployee)
+    private async void EditEmployee(EmployeeDto editedEmployee)
     {
         var result = await NorthwindRESTAPIService.PutEmployee(editedEmployee);
+        if (result != null)
+        {
+            UpdateComponents();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private void Add()
+    {
+        dialogTitle = "Add new employee";
+        #region WTF: Deselect Console Errors
+        // grid.DeselectAllRows(false);
+        // grid.DeselectAllRowsAsync(false);
+        // StateHasChanged();
+        // var selection = grid.SelectedRows.FirstOrDefault();
+        // var curSelection = grid.GetCurrentSelectedRowsAsync();
+        // grid.DeselectRows(selection);
+        // grid.deselectAll(); // Not implemented in Blazor
+        #endregion
+
+        Model = new();
+        Model.Address = new AddressDto();
+
+        #region [EndPoint] Fix EndPoint 500 exception for null address obj values either here OR in the POST method on POST new Employee
+        Model.Address.PostalCode = "12345";
+        Model.Address.City = "New York";
+        Model.Address.Street = "123 Main St";
+        Model.Address.Region = "NY";
+        #endregion
+
+        cachedModel = new();
+        editContext = new(Model);
+        dialog.ShowAsync();
+    }
+
+    private async void DeleteEmployee(int employeeId)
+    {
+        var result = await NorthwindRESTAPIService.DeleteEmployee(employeeId);
         if (result != null)
         {
             UpdateComponents();
@@ -148,6 +196,27 @@
         ResetEmployee();
         dialog.HideAsync();
     }
+
+    private void DeleteCloseForm()
+    {
+        DeleteEmployee(Model.EmployeeId);
+        dialog.HideAsync();
+    }
+
+    private async void AddEmployee(EmployeeDto employee)
+    {
+        var result = await NorthwindRESTAPIService.PostEmployee(employee);
+        if (result != null)
+        {
+            UpdateComponents();
+        }
+        else
+        {
+            // TODO: handle errors here.
+            await dialog.HideAsync();
+        }
+    }
+
     #endregion Common
 
     #region Option1: Less code. New editContext instance in GridRowSelectionChanging. Validation onblur is lost due to new editContext instance used(no model attributes requred)
@@ -230,19 +299,31 @@
         //2) Save the cur model for the form reset, using serialize/deserialize, as object clone/deep copy in C# requires a bunch of excess code
         // https://learn.microsoft.com/en-us/dotnet/api/system.object.memberwiseclone?view=net-8.0#code-try-1
         cachedModel = DeepCopyJsonDotNet(Model);
+        dialogTitle = "Edit Employee";
         dialog.ShowAsync();
     }
 
     async Task HandleSubmit()
     {
         Console.WriteLine("HandleSubmit");
+
+        if (dialogTitle == "Add new employee")
+        {
+            AddEmployee(Model);
+        }
+
+        if (dialogTitle == "Edit Employee")
         // TODO: DO NOT POST if values are not changed(yet still valid)
         // PROBLEM: editContext.IsModified() is not updated and always comes as false. ISSUE: https://infragistics.visualstudio.com/NetAdvantage/_workitems/edit/31408/
         // if (editContext.IsModified())
         // {
         // Make POST request with updated Employee data to the Northwind API endpoint
-        this.PostEmployee(Model);
+        // this.EditEmployee(Model);
         // }
+        {
+            EditEmployee(Model);
+        }
+
         return;
     }
 
