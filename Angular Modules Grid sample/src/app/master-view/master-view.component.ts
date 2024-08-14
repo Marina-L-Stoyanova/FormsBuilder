@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
-import { AddressForm, CustomersForm, CustomersType, FormType } from '../models/northwind/customers-type';
-//import { Address, Customer } from '../models/northwind/northwind-forms/northwind-forms';
+import { CustomersForm } from '../models/northwind/northwind-forms/customers-form';
+import { AddressForm } from '../models/northwind/northwind-forms/address-form';
 import { NorthwindService } from '../services/northwind.service';
 
 @Component({
@@ -13,46 +13,50 @@ import { NorthwindService } from '../services/northwind.service';
 export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
   @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
-  public northwindCustomers: CustomersType[] = [];
-  public customer!: FormGroup<FormType<CustomersType>>;
+  public northwindCustomers: any[] = [];
+  public customer: FormGroup<CustomersForm>;
   public errorMessage: string = '';
   public dialogTitle: string = '';
   public confirmText: string = '';
   public confirmEvent: string = '';
   public isDeleteButtonHidden: boolean = false;
-  private originalCustomer: CustomersType | null = null;
+  private originalCustomer: any | null = null;
 
   constructor(private northwindService: NorthwindService) {
-    this.customer = new FormGroup<FormType<CustomersType>>({
-      customerID: new FormControl(''),
-      companyName: new FormControl('', Validators.required),
-      contactName: new FormControl('', Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
-      contactTitle: new FormControl('', Validators.required),
-      address: new FormGroup<AddressForm>({
-        city: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required),
-        /* street: new FormControl(''),
-        region: new FormControl(''),
-        phone: new FormControl(''),
-        postalCode: new FormControl('') */
-      } as AddressForm),
-    })
-  }
-
-  ngOnInit() {
-    this.northwindService.getCustomers().subscribe({
-      next: (data) => this.northwindCustomers = data,
-      error: (_err: any) => this.northwindCustomers = []
+    this.customer = new FormGroup({
+      customerId: new FormControl<string | null>(null),
+      companyName: new FormControl<string | null>(null, Validators.required),
+      contactName: new FormControl<string | null>(null, Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
+      contactTitle: new FormControl<string | null>(null, Validators.required),
+      address: new FormGroup({
+        street: new FormControl<string | null>(null, Validators.required),
+        city: new FormControl<string | null>(null, Validators.required),
+        region: new FormControl<string | null>(null, Validators.required),
+        postalCode: new FormControl<string | null>(null, Validators.required),
+        country: new FormControl<string | null>(null, Validators.required),
+        phone: new FormControl<string | null>(null, Validators.required)
+      })
     });
   }
 
-  public handleRowSelection(event: IGridRowEventArgs) {
+  ngOnInit() {
+    this.fetchCustomers();
+  }
+
+  private fetchCustomers(): void {
+    this.northwindService.getCustomers().subscribe({
+      next: (data) => this.northwindCustomers = data,
+      error: () => this.northwindCustomers = []
+    });
+  }
+
+  public handleRowSelection(event: IGridRowEventArgs): void {
     if (event.row.data) {
       this.originalCustomer = JSON.parse(JSON.stringify(event.row.data));
       this.customer.patchValue(event.row.data);
       this.dialogTitle = 'Edit customer';
       this.confirmText = 'Edit customer';
-      this.confirmEvent = "onSubmit()";
+      this.confirmEvent = 'onEditCustomer';
       this.dialog.open();
     }
   }
@@ -64,7 +68,7 @@ export class MasterViewComponent implements OnInit {
     }
   }
 
-  public resetHandler(){
+  public resetHandler(): void {
     if (this.confirmText === 'Add customer') {
       this.resetForm();
     } else if (this.confirmText === 'Edit customer') {
@@ -72,20 +76,13 @@ export class MasterViewComponent implements OnInit {
     }
   }
 
-  public onFormOpen() {
+  public onFormOpen(): void {
     this.customer.reset();
     this.dialogTitle = 'Add new customer';
     this.confirmText = 'Add customer';
-    this.confirmEvent = "onAddNewCustomer()";
+    this.confirmEvent = 'onAddNewCustomer';
     this.isDeleteButtonHidden = true;
     this.dialog.open();
-  }
-
-  private fetchCustomers(): void {
-    this.northwindService.getCustomers().subscribe({
-      next: (data) => this.northwindCustomers = data,
-      error: (_err: any) => this.northwindCustomers = []
-    });
   }
 
   private resetForm(): void {
@@ -94,14 +91,12 @@ export class MasterViewComponent implements OnInit {
   }
 
   private handleResponse(response: any): void {
-    console.log('Operation successful:', response);
     this.fetchCustomers(); // Update customer list
     this.resetForm();
     this.dialog.close();
   }
 
   private handleError(error: any): void {
-    console.error('Error:', error);
     if (error.error) {
       this.errorMessage = Object.values(error.error).join('\n');
     } else {
@@ -109,97 +104,43 @@ export class MasterViewComponent implements OnInit {
     }
   }
 
-  onEditCustomer(): void {
+  public onEditCustomer(): void {
     if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerID;
-      const myCompanyName = this.customer.value.companyName;
-      const myEditedContactName = this.customer.value.contactName;
-      const myContactTitle = this.customer.value.contactTitle;
-      const myAddressCity = this.customer.value.address?.city;
-      const myAddressCountry = this.customer.value.address?.country;
-
-      if (myEditedContactName !== undefined && myEditedContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
-        myAddressCity !== undefined && myAddressCountry !== undefined && myCustomerId !== undefined) {
-        const updatedCustomer: CustomersType = {
-          customerID: myCustomerId,
-          companyName: myCompanyName,
-          contactName: myEditedContactName,
-          contactTitle: myContactTitle,
-          address: {
-            city: myAddressCity,
-            country: myAddressCountry,
-            street: '',
-            region: '',
-            postalCode: '',
-            phone: ''
-          }
-        };
-
-        this.northwindService.updateCustomer(updatedCustomer).subscribe({
-          next: (response) => this.handleResponse(response),
-          error: (error) => this.handleError(error)
-        });
-      }
+      const updatedCustomer = this.customer.getRawValue();
+      this.northwindService.updateCustomer(updatedCustomer).subscribe({
+        next: (response) => this.handleResponse(response),
+        error: (error) => this.handleError(error)
+      });
     } else {
-      // Handle invalid form state
       this.errorMessage = 'Please provide valid data for all fields.';
     }
   }
 
-  onAddNewCustomer(): void {
+  public onAddNewCustomer(): void {
     if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerID;
-      const myCompanyName = this.customer.value.companyName;
-      const myEditedContactName = this.customer.value.contactName;
-      const myContactTitle = this.customer.value.contactTitle;
-      const myAddressCity = this.customer.value.address?.city;
-      const myAddressCountry = this.customer.value.address?.country;
-
-      if (myEditedContactName !== undefined && myEditedContactName !== null && myCompanyName !== undefined && myContactTitle !== undefined &&
-        myAddressCity !== undefined && myAddressCountry !== undefined && myCustomerId !== undefined) {
-        const newCustomer: CustomersType = {
-          customerID: myCustomerId,
-          companyName: myCompanyName,
-          contactName: myEditedContactName,
-          contactTitle: myContactTitle,
-          address: {
-            city: myAddressCity,
-            country: myAddressCountry,
-            street: '',
-            region: '',
-            postalCode: '',
-            phone: ''
-          }
-        };
-
-        this.northwindService.addCustomer(newCustomer).subscribe({
-          next: (response) => this.handleResponse(response),
-          error: (error) => this.handleError(error)
-        });
-      }
+      const newCustomer = this.customer.getRawValue();
+      this.northwindService.addCustomer(newCustomer).subscribe({
+        next: (response) => this.handleResponse(response),
+        error: (error) => this.handleError(error)
+      });
     } else {
-      // Handle invalid form state
       this.errorMessage = 'Please provide valid data for all fields.';
     }
   }
 
-  onDelete(): void {
-    if (this.customer.valid) {
-      const myCustomerId = this.customer.value.customerID;
-
-      if (myCustomerId !== null && myCustomerId !== undefined) {
-        this.northwindService.deleteCustomer(myCustomerId).subscribe({
-          next: (response) => this.handleResponse(response),
-          error: (error) => this.handleError(error)
-        });
-      }
+  public onDelete(): void {
+    const myCustomerId = this.customer.value.customerId;
+    if (myCustomerId) {
+      this.northwindService.deleteCustomer(myCustomerId).subscribe({
+        next: (response) => this.handleResponse(response),
+        error: (error) => this.handleError(error)
+      });
     } else {
-      // Handle invalid form state
       this.errorMessage = 'Please provide valid data for all fields.';
     }
   }
 
-  onConfirm(): void {
+  public onConfirm(): void {
     if (this.confirmText === 'Add customer') {
       this.onAddNewCustomer();
     } else if (this.confirmText === 'Edit customer') {
@@ -207,7 +148,7 @@ export class MasterViewComponent implements OnInit {
     }
   }
 
-  onDialogClosed(): void {
+  public onDialogClosed(): void {
     this.isDeleteButtonHidden = false;
   }
 }
