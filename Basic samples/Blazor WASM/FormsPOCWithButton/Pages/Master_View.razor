@@ -1,0 +1,64 @@
+@page "/"
+@page "/master_view"
+@using FormsPOCWithButton.Services
+@using Models.NorthwindCRUD
+@inject INorthwindCRUDService NorthwindCRUDService
+
+<div class="row-layout master-view-container">
+    <EditForm EditContext="_customers_create_model_editContext" OnValidSubmit="SubmitCustomerCreateModel">
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.CustomerId" Label="customerId" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.CompanyName" Label="companyName" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.ContactName" Label="contactName" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.ContactTitle" Label="contactTitle" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.Street" Label="address.street" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.City" Label="address.city" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.Region" Label="address.region" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.PostalCode" Label="address.postalCode" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.Country" Label="address.country" Required="false" Outlined="true"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="_customers_create_model.Address.Phone" Label="address.phone" Required="false" Outlined="true"></IgbInput>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
+            Submit
+        </IgbButton>
+    </EditForm>
+</div>
+
+@code {
+    private CustomerDto _customers_create_model;
+    private EditContext _customers_create_model_editContext;
+
+    protected override void OnInitialized()
+    {
+        _customers_create_model = new CustomerDto
+            {
+                CustomerId = "id",
+                CompanyName = "Vova Vola",
+                ContactName = "Bay Dan",
+                ContactTitle = "Boss",
+                Address = new AddressDto
+                {
+                    Street = "Treta",
+                    City = "Susurlevo",
+                    Region = "Main",
+                    PostalCode = "0",
+                    Country = "Burundi",
+                    Phone = "+1",
+                }
+            };
+        // _customers_create_model ??= new();
+        // _customers_create_model.Address ??= new();
+        _customers_create_model_editContext = new(_customers_create_model);
+    }
+
+    private async void SubmitCustomerCreateModel()
+    {
+        var result = await NorthwindCRUDService.PostCustomerDto(_customers_create_model_editContext.Model as CustomerDto);
+        if (result != null)
+        {
+            _customers_create_model.CustomerId = result.CustomerId;
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+}
