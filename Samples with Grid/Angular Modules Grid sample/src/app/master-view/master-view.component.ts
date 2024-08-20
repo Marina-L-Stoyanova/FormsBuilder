@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IGridRowEventArgs, IgxDialogComponent, IgxGridComponent } from '@infragistics/igniteui-angular';
-import { CustomersForm } from '../models/northwind/northwind-forms/customers-form';
-import { AddressForm } from '../models/northwind/northwind-forms/address-form';
 import { NorthwindService } from '../services/northwind.service';
 
 @Component({
@@ -14,7 +12,7 @@ export class MasterViewComponent implements OnInit {
   @ViewChild('grid', { read: IgxGridComponent, static: true }) public grid: IgxGridComponent;
   @ViewChild('form', { read: IgxDialogComponent, static: true }) public dialog: IgxDialogComponent;
   public northwindCustomers: any[] = [];
-  public customer: FormGroup<CustomersForm>;
+  public customer: ReturnType<MasterViewComponent['createCustomerForm']>;
   public errorMessage: string = '';
   public dialogTitle: string = '';
   public confirmText: string = '';
@@ -23,7 +21,15 @@ export class MasterViewComponent implements OnInit {
   private originalCustomer: any | null = null;
 
   constructor(private northwindService: NorthwindService) {
-    this.customer = new FormGroup({
+    this.customer = this.createCustomerForm();
+  }
+
+  ngOnInit() {
+    this.fetchCustomers();
+  }
+
+  private createCustomerForm() {
+    return new FormGroup({
       customerId: new FormControl<string | null>(null),
       companyName: new FormControl<string | null>(null, Validators.required),
       contactName: new FormControl<string | null>(null, Validators.pattern("^[a-zA-Z]+( [a-zA-Z]+)*$")),
@@ -37,10 +43,6 @@ export class MasterViewComponent implements OnInit {
         phone: new FormControl<string | null>(null, Validators.required)
       })
     });
-  }
-
-  ngOnInit() {
-    this.fetchCustomers();
   }
 
   private fetchCustomers(): void {
