@@ -6,5 +6,5 @@ public class CustomerDto
     public string CompanyName { get; set; }
     public string ContactName { get; set; }
     public string ContactTitle { get; set; }
-    public AddressDto Address { get; set; }
+    public AddressDto Address { get; set; } = new();
 }

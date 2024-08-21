@@ -5,67 +5,67 @@
 @inject INorthwindCRUDService NorthwindCRUDService
 
 <div class="row-layout master-view-container">
-    @if (customerEditContext != null)
-    {
-        <EditForm EditContext="customerEditContext" OnValidSubmit="SubmitCustomerUpdateModel">
-            <p>Edit form pointing to existing variable @customer?.CustomerId</p>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.CustomerId" Label="customerId" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.CompanyName" Label="companyName" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.ContactName" Label="contactName" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.ContactTitle" Label="contactTitle" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Street" Label="address.street" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.City" Label="address.city" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Region" Label="address.region" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.PostalCode" Label="address.postalCode" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Country" Label="address.country" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Phone" Label="address.phone" Required="false" Outlined="true"></IgbInput>
-            <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
-                Update
-            </IgbButton>
-        </EditForm>
-    }
-    @if (createEditContext != null)
-    {
-        <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel">
-            <p>Create form not related to any variable</p>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).CustomerId" Label="customerId" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).CompanyName" Label="companyName" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).ContactName" Label="contactName" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).ContactTitle" Label="contactTitle" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Street" Label="address.street" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.City" Label="address.city" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Region" Label="address.region" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.PostalCode" Label="address.postalCode" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Country" Label="address.country" Required="false" Outlined="true"></IgbInput>
-            <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Phone" Label="address.phone" Required="false" Outlined="true"></IgbInput>
-            <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
-                Create
-            </IgbButton>
-            @if (!string.IsNullOrEmpty(addedId))
-            {
-                <p>Last added customer Id is @addedId</p>
-            }
-        </EditForm>
-    }
+    <EditForm EditContext="updateEditContext" OnValidSubmit="SubmitCustomerUpdateModel" FormName="update" class="form" master_view-scope>
+        <p>Edit form pointing to existing variable @customer?.CustomerId</p>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.CustomerId" Label="customerId"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.CompanyName" Label="companyName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.ContactName" Label="contactName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.ContactTitle" Label="contactTitle"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Street" Label="address.street"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.City" Label="address.city"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Region" Label="address.region"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.PostalCode" Label="address.postalCode"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Country" Label="address.country"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="customer.Address.Phone" Label="address.phone"></IgbInput>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
+            Update
+        </IgbButton>
+    </EditForm>
+    <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
+        <p>Create form not related to any variable</p>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).CustomerId" Label="customerId"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).CompanyName" Label="companyName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).ContactName" Label="contactName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).ContactTitle" Label="contactTitle"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Street" Label="address.street"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.City" Label="address.city"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Region" Label="address.region"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.PostalCode" Label="address.postalCode"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Country" Label="address.country"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="(createEditContext.Model as CustomerDto).Address.Phone" Label="address.phone"></IgbInput>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
+            Create
+        </IgbButton>
+        @if (!string.IsNullOrEmpty(addedId))
+        {
+            <p>Last added customer Id is @addedId</p>
+        }
+    </EditForm>
 </div>
 
 @code {
-    private CustomerDto customer;
-    private EditContext customerEditContext;
+    [SupplyParameterFromForm(FormName = "update")]
+    private CustomerDto customer { get; set; } = new();
+    private EditContext updateEditContext;
     private string addedId = string.Empty;
     private EditContext createEditContext;
+
+    public Master_View()
+    {
+        updateEditContext = new(new CustomerDto());
+        createEditContext = new(new CustomerDto());
+    }
 
     protected override async Task OnInitializedAsync()
     {
         customer = await NorthwindCRUDService.GetCustomerDto("QUEEN");
-        customerEditContext = new(customer);
-        createEditContext = new(new CustomerDto { Address = new AddressDto() });
+        updateEditContext = new(customer);
         await base.OnInitializedAsync();
     }
 
     private async void SubmitCustomerUpdateModel()
     {
-        var result = await NorthwindCRUDService.PutCustomerDto(customerEditContext.Model as CustomerDto);
+        var result = await NorthwindCRUDService.PutCustomerDto(updateEditContext.Model as CustomerDto);
         if (result != null)
         {
             customer.CustomerId = result.CustomerId;
