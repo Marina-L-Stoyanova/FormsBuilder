@@ -17,7 +17,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <ProjectReference Include="..\FormsPOCWithButton\FormsPOCWithButton.csproj" />
+    <ProjectReference Include="..\FormsPOCWithButton\WASM_Forms_POC.csproj" />
+    <ProjectReference Include="..\WASM_Forms_POC\WASM_Forms_POC.csproj" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     <PrivateAssets>all</PrivateAssets>

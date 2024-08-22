@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using FormsPOCWithButton;
+using WASM_Forms_POC;
 using IgniteUI.Blazor.Controls;
-using FormsPOCWithButton.Services;
+using WASM_Forms_POC.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

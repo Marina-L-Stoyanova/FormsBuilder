@@ -1,4 +1,5 @@
-using FormsPOCWithButton.Models.NorthwindCRUD;
+using WASM_Forms_POC.Models.NorthwindCRUD;
+using WASM_Forms_POC.Services;
 
 namespace FormsPOCWithButton.Services
 {

@@ -1,4 +1,4 @@
-namespace FormsPOCWithButton.Models.NorthwindCRUD;
+namespace WASM_Forms_POC.Models.NorthwindCRUD;
 
 public class CustomerDto: ICloneable
 {

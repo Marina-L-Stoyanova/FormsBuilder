@@ -1,6 +1,6 @@
-using FormsPOCWithButton.Models.NorthwindCRUD;
+using WASM_Forms_POC.Models.NorthwindCRUD;
 
-namespace FormsPOCWithButton.Services
+namespace WASM_Forms_POC.Services
 {
     public interface INorthwindCRUDService
     {
