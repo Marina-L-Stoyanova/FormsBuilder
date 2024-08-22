@@ -8,6 +8,7 @@
     <EditForm EditContext="updateEditContext" OnValidSubmit="SubmitCustomerUpdateModel" FormName="update" class="form" master_view-scope>
         <p>Edit form pointing to existing variable with @customer?.CustomerId</p>
         <p>Cloned variable with id @customerFormModel.CustomerId</p>
+        <p>Update edit context with id @((updateEditContext.Model as CustomerDto).CustomerId)</p>
         <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.CustomerId" Label="customerId"></IgbInput>
         <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.CompanyName" Label="companyName"></IgbInput>
         <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.ContactName" Label="contactName"></IgbInput>
@@ -21,7 +22,7 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Update
         </IgbButton>
-        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset">
+        <IgbButton Variant="ButtonVariant.Contained" @onclick="ResetCustomerFormModel">
             Reset
         </IgbButton>
     </EditForm>
@@ -40,10 +41,11 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Create
         </IgbButton>
-        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset">
+        <IgbButton Variant="ButtonVariant.Contained" @onclick="ResetEmptyFormModel">
             Reset
         </IgbButton>
         <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
+        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
     </EditForm>
 </div>
 
@@ -97,5 +99,17 @@
         {
             // TODO: handle errors here.
         }
+    }
+
+    private void ResetCustomerFormModel()
+    {
+        customerFormModel = customer.Clone() as CustomerDto;
+        updateEditContext = new(customerFormModel);
+    }
+
+    private void ResetEmptyFormModel()
+    {
+        emptyFormModel = new();
+        createEditContext = new(emptyFormModel);
     }
 }
