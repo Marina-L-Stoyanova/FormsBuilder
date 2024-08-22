@@ -3,8 +3,12 @@
 @using NorthwindREST
 @using Models.NorthwindREST
 @inject INorthwindRESTService NorthwindRESTService
+@inject NavigationManager Navigation
 
 <div class="row-layout master-view-container">
+    <IgbButton @onclick='() => Navigation.NavigateTo("native_inputs")'>
+        Go Native
+    </IgbButton>
     <EditForm EditContext="updateEditContext" OnValidSubmit="SubmitCustomerUpdateModel" FormName="update" class="form" master_view-scope>
         <p>Edit form pointing to existing variable with @customer?.CustomerId</p>
         <p>Cloned variable with id @customerFormModel.CustomerId</p>
@@ -28,6 +32,8 @@
     </EditForm>
     <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
         <p>Create form not related to any variable</p>
+        <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
+        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
         <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.CustomerId" Label="customerId"></IgbInput>
         <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.CompanyName" Label="companyName"></IgbInput>
         <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.ContactName" Label="contactName"></IgbInput>
@@ -44,8 +50,6 @@
         <IgbButton Variant="ButtonVariant.Contained" @onclick="ResetEmptyFormModel">
             Reset
         </IgbButton>
-        <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
-        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
     </EditForm>
 </div>
 
