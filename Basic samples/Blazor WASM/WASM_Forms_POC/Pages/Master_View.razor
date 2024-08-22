@@ -21,6 +21,9 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Update
         </IgbButton>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset">
+            Reset
+        </IgbButton>
     </EditForm>
     <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
         <p>Create form not related to any variable</p>
@@ -36,6 +39,9 @@
         <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.Phone" Label="address.phone"></IgbInput>
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Create
+        </IgbButton>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset">
+            Reset
         </IgbButton>
         <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
     </EditForm>
