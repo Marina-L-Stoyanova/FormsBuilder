@@ -1,8 +1,8 @@
-using WASM_Forms_POC.Models.NorthwindCRUD;
+using Server_Forms_POC.Models.NorthwindREST;
 
-namespace WASM_Forms_POC.Services
+namespace Server_Forms_POC.NorthwindREST
 {
-    public interface INorthwindCRUDService
+    public interface INorthwindRESTService
     {
         Task<CustomerDto> GetCustomerDto(string? id);
         Task<CustomerDto> PostCustomerDto(CustomerDto? data);
