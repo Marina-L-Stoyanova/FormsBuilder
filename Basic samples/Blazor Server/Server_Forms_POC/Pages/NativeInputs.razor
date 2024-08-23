@@ -30,7 +30,7 @@
         </button>
     </EditForm>
     <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
-        <p>Create form not related to any variable</p>
+        <p>Create form not related to any variable with native inputs</p>
         <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
         <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
         <input type="text" @bind-value="emptyFormModel.CustomerId" />
@@ -47,6 +47,27 @@
             Update
         </button>
         <button @onclick="ResetEmptyFormModel">
+            Reset
+        </button>
+    </EditForm>
+    <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create2" class="form" master_view-scope>
+        <p>Create form not related to any variable with Blazor InputText</p>
+        <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
+        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
+        <InputText @bind-Value="emptyFormModel.CustomerId" />
+        <InputText @bind-Value="emptyFormModel.CompanyName" />
+        <InputText @bind-Value="emptyFormModel.ContactName" />
+        <InputText @bind-Value="emptyFormModel.ContactTitle" />
+        <InputText @bind-Value="emptyFormModel.Address.Street" />
+        <InputText @bind-Value="emptyFormModel.Address.City" />
+        <InputText @bind-Value="emptyFormModel.Address.Region" />
+        <InputText @bind-Value="emptyFormModel.Address.PostalCode" />
+        <InputText @bind-Value="emptyFormModel.Address.Country" />
+        <InputText @bind-Value="emptyFormModel.Address.Phone" />
+        <button type="submit">
+            Update
+        </button>
+        <button type="reset">
             Reset
         </button>
     </EditForm>
