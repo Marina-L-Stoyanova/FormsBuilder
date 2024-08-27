@@ -1,7 +1,9 @@
 import { IgrButton, IgrButtonModule, IgrInput, IgrInputModule, IgrTextareaModule } from "@infragistics/igniteui-react";
 import { useEffect, useReducer, useRef } from "react";
+import { formDataToObject } from '../utils/form-utils';
 import createClassTransformer from '../style-utils';
 import styles from './master-view.module.css';
+import { northwindCRUDService } from '../services/NorthwindCRUD-service';
 
 IgrButtonModule.register();
 IgrInputModule.register();
@@ -9,25 +11,27 @@ IgrTextareaModule.register();
 
 export default function MasterView() {
   const classes = createClassTransformer(styles);
-  const [ forceUpdate] = useReducer(x => x + 1, 0);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
   const formElement = useRef<HTMLFormElement>(null);
 
   const next = () => {
     forceUpdate();
   };
 
-  const onConfirm = () => {
-    alert("Submit!")
-  };
+  const onFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent the default form submission
 
-  useEffect(() => {
     if (formElement.current) {
-      (formElement.current.elements.namedItem("companyName") as HTMLInputElement).value = "";
-      (formElement.current.elements.namedItem("customerId") as HTMLInputElement).value = "";
-      (formElement.current.elements.namedItem("contactName") as HTMLInputElement).value = "";
-      (formElement.current.elements.namedItem("contactTitle") as HTMLInputElement).value = "";
+      const formObject = formDataToObject(formElement.current);
+      try {
+        const data = await northwindCRUDService.postCustomerDto(formObject);
+        // TODO: handle local data update if needed.
+        console.log("Data submitted successfully:", data);
+      } catch (error) {
+        console.error("Error submitting form data:", error);
+      }
     }
-  }, []); // Empty dependency array means this runs once after the initial render
+  };
 
   return (
       <div className={classes("row-layout master-view-container")}>
@@ -40,10 +44,10 @@ export default function MasterView() {
             </IgrInput>
             <IgrInput label="Contact title" outlined="true" name="contactTitle" className={classes("user-input")} key="contactTitle" blur={next}>
             </IgrInput>
+            <IgrButton type="submit" variant="flat">
+          <span>Submit</span>
+        </IgrButton>
           </form>
-          <div slot="footer">
-            <IgrButton clicked={onConfirm} variant="flat"><span>Submit</span></IgrButton>
-          </div>
       </div>
   );
 }
