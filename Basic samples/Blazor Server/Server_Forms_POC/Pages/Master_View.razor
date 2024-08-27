@@ -77,9 +77,9 @@
         await base.OnInitializedAsync();
     }
 
-    private async void SubmitCustomerUpdateModel()
+    private async void SubmitCustomerUpdateModel(EditContext e)
     {
-        var result = await NorthwindRESTService.PutCustomerDto(customerFormModel);
+        var result = await NorthwindRESTService.PutCustomerDto(e.Model as CustomerDto);
         if (result != null)
         {
             customer.CustomerId = result.CustomerId;
@@ -91,9 +91,9 @@
         }
     }
 
-    private async void SubmitCustomerCreateModel()
+    private async void SubmitCustomerCreateModel(EditContext e)
     {
-        var result = await NorthwindRESTService.PostCustomerDto(emptyFormModel);
+        var result = await NorthwindRESTService.PostCustomerDto(e.Model as CustomerDto);
         if (result != null)
         {
             emptyFormModel.CustomerId = result.CustomerId;
