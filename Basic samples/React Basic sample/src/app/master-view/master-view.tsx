@@ -1,5 +1,5 @@
 import { IgrButton, IgrButtonModule, IgrInput, IgrInputModule, IgrTextareaModule } from "@infragistics/igniteui-react";
-import { useEffect, useReducer, useRef } from "react";
+import * as React from "react";
 import { formDataToObject } from '../utils/form-utils';
 import createClassTransformer from '../style-utils';
 import styles from './master-view.module.css';
@@ -11,8 +11,8 @@ IgrTextareaModule.register();
 
 export default function MasterView() {
   const classes = createClassTransformer(styles);
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
-  const formElement = useRef<HTMLFormElement>(null);
+  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+  const formElement = React.useRef<HTMLFormElement>(null);
 
   const next = () => {
     forceUpdate();
@@ -35,7 +35,7 @@ export default function MasterView() {
 
   return (
       <div className={classes("row-layout master-view-container")}>
-          <form className="form" ref={formElement}>
+          <form className="form" ref={formElement} action="${this.onAddNewSubmit}">
             <IgrInput label="Customer ID" outlined="true" name="customerId" className={classes("user-input")} key="customerId" blur={next}>
             </IgrInput>
             <IgrInput label="Company name" outlined="true" name="companyName" className={classes("user-input")} key="companyName" blur={next}>
