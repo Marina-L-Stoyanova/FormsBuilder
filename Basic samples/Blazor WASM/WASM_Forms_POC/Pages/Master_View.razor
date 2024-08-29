@@ -1,0 +1,119 @@
+@page "/"
+@page "/master_view"
+@using WASM_Forms_POC.Services
+@using Models.NorthwindCRUD
+@inject INorthwindCRUDService NorthwindCRUDService
+@inject NavigationManager Navigation
+
+<div class="row-layout master-view-container">
+    <IgbButton @onclick='() => Navigation.NavigateTo("native_inputs")'>
+        Go Native
+    </IgbButton>
+    <EditForm EditContext="updateEditContext" OnValidSubmit="SubmitCustomerUpdateModel" FormName="update" class="form" master_view-scope>
+        <p>Edit form pointing to existing variable with @customer?.CustomerId</p>
+        <p>Cloned variable with id @customerFormModel.CustomerId</p>
+        <p>Update edit context with id @((updateEditContext.Model as CustomerDto).CustomerId)</p>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.CustomerId" Label="customerId"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.CompanyName" Label="companyName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.ContactName" Label="contactName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.ContactTitle" Label="contactTitle"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.Street" Label="address.street"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.City" Label="address.city"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.Region" Label="address.region"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.PostalCode" Label="address.postalCode"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.Country" Label="address.country"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" Required="true" @bind-Value="customerFormModel.Address.Phone" Label="address.phone"></IgbInput>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
+            Update
+        </IgbButton>
+        <IgbButton Variant="ButtonVariant.Contained" @onclick="ResetCustomerFormModel">
+            Reset
+        </IgbButton>
+    </EditForm>
+    <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
+        <p>Create form not related to any variable</p>
+        <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
+        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.CustomerId" Label="customerId"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.CompanyName" Label="companyName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.ContactName" Label="contactName"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.ContactTitle" Label="contactTitle"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.Street" Label="address.street"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.City" Label="address.city"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.Region" Label="address.region"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.PostalCode" Label="address.postalCode"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.Country" Label="address.country"></IgbInput>
+        <IgbInput DisplayType="InputType.Text" @bind-Value="emptyFormModel.Address.Phone" Label="address.phone"></IgbInput>
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
+            Create
+        </IgbButton>
+        <IgbButton Variant="ButtonVariant.Contained" @onclick="ResetEmptyFormModel">
+            Reset
+        </IgbButton>
+    </EditForm>
+</div>
+
+@code {
+    private CustomerDto customer { get; set; }
+    // we do not need this. We have either empty form where no value should be supplied,
+    // or we have form bound to a variable and we get the value from the clone of the variable
+    // TODO: we could also skip generating of FormNames for the forms
+    // [SupplyParameterFromForm(FormName = "update")]
+    private CustomerDto customerFormModel { get; set; } = new();
+    private EditContext updateEditContext = new(new CustomerDto());
+
+    // [SupplyParameterFromForm(FormName = "create")]
+    private CustomerDto emptyFormModel { get; set; } = new();
+    private EditContext createEditContext = new(new CustomerDto());
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await NorthwindCRUDService.GetCustomerDto("QUEEN");
+        customerFormModel = customer.Clone() as CustomerDto;
+        updateEditContext = new(customerFormModel);
+
+        createEditContext = new(emptyFormModel);
+
+        await base.OnInitializedAsync();
+    }
+
+    private async void SubmitCustomerUpdateModel(EditContext e)
+    {
+        var result = await NorthwindCRUDService.PutCustomerDto(e.Model as CustomerDto);
+        if (result != null)
+        {
+            customer.CustomerId = result.CustomerId;
+            StateHasChanged();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private async void SubmitCustomerCreateModel(EditContext e)
+    {
+        var result = await NorthwindCRUDService.PostCustomerDto(e.Model as CustomerDto);
+        if (result != null)
+        {
+            emptyFormModel.CustomerId = result.CustomerId;
+            StateHasChanged();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private void ResetCustomerFormModel()
+    {
+        customerFormModel = customer.Clone() as CustomerDto;
+        updateEditContext = new(customerFormModel);
+    }
+
+    private void ResetEmptyFormModel()
+    {
+        emptyFormModel = new();
+        createEditContext = new(emptyFormModel);
+    }
+}

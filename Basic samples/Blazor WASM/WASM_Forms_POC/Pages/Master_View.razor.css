@@ -1,0 +1,17 @@
+.row-layout {
+    display: flex;
+}
+
+.master-view-container {
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
+    height: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction:column;
+    gap: 5px;
+    margin: 10px;
+}

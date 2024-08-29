@@ -1,0 +1,118 @@
+﻿@page "/native_inputs"
+@using WASM_Forms_POC.Services
+@using Models.NorthwindCRUD
+@inject INorthwindCRUDService NorthwindCRUDService
+@inject NavigationManager Navigation
+
+<div class="row-layout master-view-container">
+    <IgbButton @onclick='() => Navigation.NavigateTo("master_view")'>
+        Go IG
+    </IgbButton>
+    <EditForm EditContext="updateEditContext" OnValidSubmit="SubmitCustomerUpdateModel" FormName="update" class="form" master_view-scope>
+        <p>Edit form pointing to existing variable with @customer?.CustomerId</p>
+        <p>Cloned variable with id @customerFormModel.CustomerId</p>
+        <p>Update edit context with id @((updateEditContext.Model as CustomerDto).CustomerId)</p>
+        <input type="text" required @bind-value="customerFormModel.CustomerId" />
+        <input type="text" required @bind-value="customerFormModel.CompanyName" />
+        <input type="text" required @bind-value="customerFormModel.ContactName" />
+        <input type="text" required @bind-value="customerFormModel.ContactTitle" />
+        <input type="text" required @bind-value="customerFormModel.Address.Street" />
+        <input type="text" required @bind-value="customerFormModel.Address.City" />
+        <input type="text" required @bind-value="customerFormModel.Address.Region" />
+        <input type="text" required @bind-value="customerFormModel.Address.PostalCode" />
+        <input type="text" required @bind-value="customerFormModel.Address.Country" />
+        <input type="text" required @bind-value="customerFormModel.Address.Phone" />
+        <button type="submit">
+            Update
+        </button>
+        <button @onclick="ResetCustomerFormModel">
+            Reset
+        </button>
+    </EditForm>
+    <EditForm EditContext="createEditContext" OnValidSubmit="SubmitCustomerCreateModel" FormName="create" class="form" master_view-scope>
+        <p>Create form not related to any variable</p>
+        <p>Created customer has id @(emptyFormModel.CustomerId ?? "NONE")</p>
+        <p>Create edit context with id @((createEditContext.Model as CustomerDto).CustomerId)</p>
+        <input type="text" @bind-value="emptyFormModel.CustomerId" />
+        <input type="text" @bind-value="emptyFormModel.CompanyName" />
+        <input type="text" @bind-value="emptyFormModel.ContactName" />
+        <input type="text" @bind-value="emptyFormModel.ContactTitle" />
+        <input type="text" @bind-value="emptyFormModel.Address.Street" />
+        <input type="text" @bind-value="emptyFormModel.Address.City" />
+        <input type="text" @bind-value="emptyFormModel.Address.Region" />
+        <input type="text" @bind-value="emptyFormModel.Address.PostalCode" />
+        <input type="text" @bind-value="emptyFormModel.Address.Country" />
+        <input type="text" @bind-value="emptyFormModel.Address.Phone" />
+        <button type="submit">
+            Update
+        </button>
+        <button @onclick="ResetEmptyFormModel">
+            Reset
+        </button>
+    </EditForm>
+</div>
+
+@code {
+    private CustomerDto customer { get; set; }
+    // we do not need this. We have either empty form where no value should be supplied,
+    // or we have form bound to a variable and we get the value from the clone of the variable
+    // TODO: we could also skip generating of FormNames for the forms
+    // [SupplyParameterFromForm(FormName = "update")]
+    private CustomerDto customerFormModel { get; set; } = new();
+    private EditContext updateEditContext = new(new CustomerDto());
+
+    // [SupplyParameterFromForm(FormName = "create")]
+    private CustomerDto emptyFormModel { get; set; } = new();
+    private EditContext createEditContext = new(new CustomerDto());
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await NorthwindCRUDService.GetCustomerDto("QUEEN");
+        customerFormModel = customer.Clone() as CustomerDto;
+        updateEditContext = new(customerFormModel);
+
+        createEditContext = new(emptyFormModel);
+
+        await base.OnInitializedAsync();
+    }
+
+    private async void SubmitCustomerUpdateModel(EditContext e)
+    {
+        var result = await NorthwindCRUDService.PutCustomerDto(e.Model as CustomerDto);
+        if (result != null)
+        {
+            customer.CustomerId = result.CustomerId;
+            StateHasChanged();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private async void SubmitCustomerCreateModel(EditContext e)
+    {
+        var result = await NorthwindCRUDService.PostCustomerDto(e.Model as CustomerDto);
+        if (result != null)
+        {
+            emptyFormModel.CustomerId = result.CustomerId;
+            StateHasChanged();
+        }
+        else
+        {
+            // TODO: handle errors here.
+        }
+    }
+
+    private void ResetCustomerFormModel()
+    {
+        customerFormModel = customer.Clone() as CustomerDto;
+        updateEditContext = new(customerFormModel);
+    }
+
+    private void ResetEmptyFormModel()
+    {
+        emptyFormModel = new();
+        createEditContext = new(emptyFormModel);
+    }
+}
