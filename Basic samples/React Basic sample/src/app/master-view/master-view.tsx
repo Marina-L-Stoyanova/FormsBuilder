@@ -18,7 +18,7 @@ export default function MasterView() {
     forceUpdate();
   };
 
-  const onFormSubmit = async (e: React.FormEvent) => {
+  const onAddNewSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent the default form submission
 
     if (formElement.current) {
