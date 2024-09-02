@@ -1,5 +1,5 @@
-import { IgcButtonComponent, IgcCheckboxComponent, IgcComboComponent, IgcDialogComponent, IgcInputComponent, IgcMaskInputComponent, IgcSelectComponent, IgcSnackbarComponent, IgcTextareaComponent, defineComponents } from "igniteui-webcomponents";
-import { LitElement, PropertyValues, css, html, nothing } from 'lit';
+import {  IgcInputComponent,  defineComponents } from "igniteui-webcomponents";
+import { LitElement, css, html } from 'lit';
 import { formDataToObject } from '../utils/form-utils';
 import { customElement, eventOptions, query, state } from 'lit/decorators.js';
 import { CustomerDto } from '../models/DataSource2/customer-dto';
@@ -43,15 +43,9 @@ export default class MasterView extends LitElement {
   @query("form")
   public form!: HTMLFormElement;
 
-  @eventOptions({capture: true})
-  invalidHandler() {
-    this.requestUpdate();
-  }
-
   public dataSource2Customers: CustomerDto[] = [];
 
   @state()
-  public confirmText: string = '';
 
   private onAddNewSubmit(e: any) {
     e.preventDefault();
@@ -66,12 +60,16 @@ export default class MasterView extends LitElement {
       <link rel='stylesheet' href='../../ig-theme.css'>
       <link rel='stylesheet' href='node_modules/igniteui-webcomponents-grids/grids/themes/light/material.css'>
 
-      <form @submit="${this.onAddNewSubmit}" class="column-layout form">
+      <form @submit="${this.onAddNewSubmit}" class="column-layout form" id="form">
           <igc-input class="form-input" id="customerId" name="customerId" label="Customer ID" placeholder="Customer ID">
           </igc-input>
           <igc-input class="form-input" name="companyName" label="Company name" placeholder="Company name" ></igc-input>
           <igc-input class="form-input" name="contactName" label="Contact name" placeholder="Contact name" ></igc-input>
           <igc-input class="form-input" name="contactTitle" label="Contact title" placeholder="Contact title" ></igc-input>
+          <igc-button class="button">
+          Submit
+          <igc-ripple></igc-ripple>
+        </igc-button>
         </form>        
     `;
   }
