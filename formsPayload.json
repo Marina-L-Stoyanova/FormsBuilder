@@ -1,0 +1,2708 @@
+{
+    "application": {
+        "id": "ofiojceoqesk",
+        "title": "forms POC - with button",
+        "assetsContent": "",
+        "views": [
+            {
+                "id": "112eb6bf-3faa-46c4-b4e8-9286282d357d",
+                "name": "Master View",
+                "isHomeScreen": true,
+                "layout": {
+                    "mode": 1,
+                    "direction": 0,
+                    "wrap": 1,
+                    "justifyContent": 0,
+                    "alignItems": 3,
+                    "alignContent": 0,
+                    "overflow": 0,
+                    "gap": null
+                },
+                "childViews": [],
+                "children": [
+                    {
+                        "id": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc",
+                        "name": "",
+                        "libraryId": "GSC",
+                        "definitionId": "form",
+                        "actions": [
+                            {
+                                "id": "aa7009a7-74a9-4b03-bd54-62ea18166afa",
+                                "type": 5,
+                                "trigger": "Create",
+                                "dataSourceId": "08dcb215-9d47-40f5-8c98-fcaeffeb33c6",
+                                "dataObjectId": "3b9f7777-d1c1-4d52-a60e-1695a251601e",
+                                "params": [
+                                    {
+                                        "location": "body",
+                                        "name": "data"
+                                    }
+                                ]
+                            }
+                        ],
+                        "properties": [],
+                        "position": {
+                            "mode": 0,
+                            "top": null,
+                            "left": null,
+                            "right": null,
+                            "bottom": null,
+                            "horizontalMiddle": null,
+                            "verticalMiddle": null
+                        },
+                        "size": {
+                            "width": null,
+                            "height": null,
+                            "minWidth": null,
+                            "minHeight": null,
+                            "maxWidth": null,
+                            "maxHeight": null
+                        },
+                        "margin": null,
+                        "padding": null,
+                        "layout": {
+                            "mode": 1,
+                            "direction": 2,
+                            "wrap": 1,
+                            "justifyContent": 0,
+                            "alignItems": 3,
+                            "alignContent": 0,
+                            "overflow": 0,
+                            "gap": {
+                                "column": "0.5rem",
+                                "row": "0.5rem"
+                            }
+                        },
+                        "itemLayout": {
+                            "mode": 1,
+                            "alignSelf": null,
+                            "justifySelf": null,
+                            "grow": 0,
+                            "shrink": 0,
+                            "basis": "auto"
+                        },
+                        "iterator": null,
+                        "content": null,
+                        "hidden": false,
+                        "styles": [],
+                        "children": [
+                            {
+                                "id": "08aea367-768e-470e-bab7-91b67d9f175c",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "6dcbe895-1e9d-42fd-a944-cdc3898ced3c",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "82ab30d4-66c4-4617-a576-69fd107d3cf9",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "customerId",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "0f42bbd9-b9bf-4a6e-a8ee-864950ebd1ad",
+                                        "name": "Label",
+                                        "value": "customerId",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "91990b45-1029-43a2-997d-90a1ccfd7491",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "62479c55-fa0e-4acb-8508-e29d2df0c0fc",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "fba3c0ac-09c6-4547-a31b-cfdf0100b11d",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2fd18bdb-9a3f-4a5a-9d18-df06761ee1b8",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5f0220d6-f9ef-49ee-9248-4fcd7195ca51",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "companyName",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "e10398c9-3879-4d60-85ad-612575ac7eb5",
+                                        "name": "Label",
+                                        "value": "companyName",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "b725d603-9dc9-4ad8-9f87-e571c174d092",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "c19013b0-5d2a-4864-9299-6e1edab40bcb",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "0e48e0ca-8a9a-4c56-83ff-79f6964c6440",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2942d22a-c9d7-4f9a-a8a2-d873de925e26",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "ecc4b3f5-c8f3-4b9a-99a8-89a3db5d5d0a",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "contactName",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "9a391451-ac64-44d4-a3d4-2ec79dbfc84c",
+                                        "name": "Label",
+                                        "value": "contactName",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a31e6599-d166-4793-8542-1eba07a9e91a",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a714a228-26e9-42d8-8dcc-5ecdd6bf94cc",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "f183d2a9-f008-45cd-b9a5-bdabae416441",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "3ed7a91d-382a-4962-a59a-5ea3a8094915",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a954f5e9-0d93-4fc5-8f6b-ebf0b2e09393",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "contactTitle",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "a6aa55f0-2506-43c5-a94c-8e0c8dc38494",
+                                        "name": "Label",
+                                        "value": "contactTitle",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f8cd9633-610f-4f4a-838e-677b746f5262",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "bed27d43-f910-4262-bfe2-26df702e5ad0",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "b76862c3-9887-45a8-a8f2-c1fa4591bd62",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2983fe0c-b64e-4fbe-8892-31359d15c49b",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "8a0846ad-f9c1-4ddf-b6d8-0136c345aec8",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.street",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "3f811d76-43df-409a-898e-d84e379b5be7",
+                                        "name": "Label",
+                                        "value": "address.street",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "7aaffc4f-f793-406c-a214-32483006085d",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "c27b358f-ac4b-4679-9559-4b5357d86c95",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "a292b5a4-75f4-436a-b462-c14563a25458",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "5747e78d-dc91-4daf-a22e-0d23e75b9a90",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "d93b1333-d827-44ba-997a-a7a449861a61",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.city",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "b0dfc757-f72f-43b9-8128-3d4caf48c46b",
+                                        "name": "Label",
+                                        "value": "address.city",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "81c046bc-73cd-458d-aa2f-7b20da4e1ed5",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f41bf48c-e779-452b-9036-d7d246f29412",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "6a306058-5693-4b94-845e-ae95634744d3",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "702567be-38b2-49ee-b91a-eb695229a928",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "85bd5dca-fa93-4e7f-87b3-6ba7609cdbf6",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.region",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "d488fce1-830e-4145-a768-e43f750bd4bd",
+                                        "name": "Label",
+                                        "value": "address.region",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5441aef5-7c95-45d5-8c93-b095b81a160f",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "208160e0-4fda-48d6-8929-5bdaa1efd294",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "c3eb5404-b691-4868-8004-1d2c849caaa7",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "64e23962-d3f9-4f41-bbe8-f5021d6a8a8c",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5d8513e3-3e26-4c91-83e9-4d2a3d730874",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.postalCode",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "c71a1992-2c56-4da3-96c4-52ab5bb0e29d",
+                                        "name": "Label",
+                                        "value": "address.postalCode",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "9842bdba-7ee5-47a1-9ff7-9a2ef76f740e",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "752d6a84-5c87-4fdc-8f03-41c306c9286f",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "2f0adea6-1799-4548-bf1c-123a742e30ab",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "19e80fc0-7b62-4ccd-8d8e-862ead145fbf",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "1085074e-9931-4bf8-a00c-9f03ebaa6983",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.country",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "672aacd4-44d5-4ccc-bf8a-95fec103f858",
+                                        "name": "Label",
+                                        "value": "address.country",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "4828fb1c-e98c-46e5-b73b-e53d05db95c6",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "95f640fe-7409-4114-8f29-91b5e85fd159",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "d4694915-f75f-4b84-a7c0-32bc724ca066",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "bc82bbf9-984b-47e1-aa12-75aaea3a079d",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "4dc4cf53-e079-4092-b986-466dbca61c90",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.phone",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "a2a535c9-8abc-4fc1-b5fb-c3d5373070bc"
+                                        }
+                                    },
+                                    {
+                                        "id": "82df45c5-ded6-4a9c-90d6-347b82f8256d",
+                                        "name": "Label",
+                                        "value": "address.phone",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "e51b7706-7fb1-45d3-9b0c-421e3feb4287",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "6c03f1c1-d679-4ebe-b254-c2c7ef607f0a",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "b9d88b26-5b93-4688-b2a6-0cd697ba05fa",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "button",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "f7de03f2-4d3c-4aa9-93c8-9814a5d4fce9",
+                                        "name": "Type",
+                                        "value": "Contained",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f7de03f2-4d3c-4aa9-93c8-9814a5d4fce7",
+                                        "name": "Kind",
+                                        "value": "Submit",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": "max-content",
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [
+                                    {
+                                        "id": "ab1c50ae-1339-470a-b7f2-f914f70f4ecd",
+                                        "name": "",
+                                        "libraryId": "GSC",
+                                        "definitionId": "content",
+                                        "actions": [],
+                                        "properties": [],
+                                        "position": {
+                                            "mode": 0,
+                                            "top": null,
+                                            "left": null,
+                                            "right": null,
+                                            "bottom": null,
+                                            "horizontalMiddle": null,
+                                            "verticalMiddle": null
+                                        },
+                                        "size": {
+                                            "width": null,
+                                            "height": null,
+                                            "minWidth": null,
+                                            "minHeight": null,
+                                            "maxWidth": null,
+                                            "maxHeight": null
+                                        },
+                                        "margin": null,
+                                        "padding": null,
+                                        "layout": null,
+                                        "itemLayout": null,
+                                        "iterator": null,
+                                        "content": {
+                                            "id": "1588d046-77e7-4749-9d35-17af101023a4",
+                                            "name": "content",
+                                            "value": "Submit",
+                                            "valueType": "string",
+                                            "propertyType": 0
+                                        },
+                                        "hidden": false,
+                                        "styles": [],
+                                        "children": [],
+                                        "templates": []
+                                    }
+                                ],
+                                "templates": []
+                            }
+                        ],
+                        "templates": []
+                    },
+                    {
+                        "id": "other-form",
+                        "name": "",
+                        "libraryId": "GSC",
+                        "definitionId": "form",
+                        "actions": [
+                            {
+                                "id": "other-action",
+                                "type": 5,
+                                "trigger": "Create",
+                                "dataSourceId": "08dcb215-9d47-40f5-8c98-fcaeffeb33c6",
+                                "dataObjectId": "3b9f7777-d1c1-4d52-a60e-1695a251601e",
+                                "params": [
+                                    {
+                                        "location": "body",
+                                        "name": "data"
+                                    }
+                                ]
+                            }
+                        ],
+                        "properties": [],
+                        "position": {
+                            "mode": 0,
+                            "top": null,
+                            "left": null,
+                            "right": null,
+                            "bottom": null,
+                            "horizontalMiddle": null,
+                            "verticalMiddle": null
+                        },
+                        "size": {
+                            "width": null,
+                            "height": null,
+                            "minWidth": null,
+                            "minHeight": null,
+                            "maxWidth": null,
+                            "maxHeight": null
+                        },
+                        "margin": null,
+                        "padding": null,
+                        "layout": {
+                            "mode": 1,
+                            "direction": 2,
+                            "wrap": 1,
+                            "justifyContent": 0,
+                            "alignItems": 3,
+                            "alignContent": 0,
+                            "overflow": 0,
+                            "gap": {
+                                "column": "0.5rem",
+                                "row": "0.5rem"
+                            }
+                        },
+                        "itemLayout": {
+                            "mode": 1,
+                            "alignSelf": null,
+                            "justifySelf": null,
+                            "grow": 0,
+                            "shrink": 0,
+                            "basis": "auto"
+                        },
+                        "iterator": null,
+                        "content": null,
+                        "hidden": false,
+                        "styles": [],
+                        "children": [
+                            {
+                                "id": "08aea367-768e-470e-bab7-91b67d9f175c",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "6dcbe895-1e9d-42fd-a944-cdc3898ced3c",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "82ab30d4-66c4-4617-a576-69fd107d3cf9",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "customerId",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "0f42bbd9-b9bf-4a6e-a8ee-864950ebd1ad",
+                                        "name": "Label",
+                                        "value": "customerId",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "91990b45-1029-43a2-997d-90a1ccfd7491",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "62479c55-fa0e-4acb-8508-e29d2df0c0fc",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "fba3c0ac-09c6-4547-a31b-cfdf0100b11d",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2fd18bdb-9a3f-4a5a-9d18-df06761ee1b8",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5f0220d6-f9ef-49ee-9248-4fcd7195ca51",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "companyName",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "e10398c9-3879-4d60-85ad-612575ac7eb5",
+                                        "name": "Label",
+                                        "value": "companyName",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "b725d603-9dc9-4ad8-9f87-e571c174d092",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "c19013b0-5d2a-4864-9299-6e1edab40bcb",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "0e48e0ca-8a9a-4c56-83ff-79f6964c6440",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2942d22a-c9d7-4f9a-a8a2-d873de925e26",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "ecc4b3f5-c8f3-4b9a-99a8-89a3db5d5d0a",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "contactName",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "9a391451-ac64-44d4-a3d4-2ec79dbfc84c",
+                                        "name": "Label",
+                                        "value": "contactName",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a31e6599-d166-4793-8542-1eba07a9e91a",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a714a228-26e9-42d8-8dcc-5ecdd6bf94cc",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "f183d2a9-f008-45cd-b9a5-bdabae416441",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "3ed7a91d-382a-4962-a59a-5ea3a8094915",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "a954f5e9-0d93-4fc5-8f6b-ebf0b2e09393",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "contactTitle",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "a6aa55f0-2506-43c5-a94c-8e0c8dc38494",
+                                        "name": "Label",
+                                        "value": "contactTitle",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f8cd9633-610f-4f4a-838e-677b746f5262",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "bed27d43-f910-4262-bfe2-26df702e5ad0",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "b76862c3-9887-45a8-a8f2-c1fa4591bd62",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "2983fe0c-b64e-4fbe-8892-31359d15c49b",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "8a0846ad-f9c1-4ddf-b6d8-0136c345aec8",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.street",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "3f811d76-43df-409a-898e-d84e379b5be7",
+                                        "name": "Label",
+                                        "value": "address.street",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "7aaffc4f-f793-406c-a214-32483006085d",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "c27b358f-ac4b-4679-9559-4b5357d86c95",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "a292b5a4-75f4-436a-b462-c14563a25458",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "5747e78d-dc91-4daf-a22e-0d23e75b9a90",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "d93b1333-d827-44ba-997a-a7a449861a61",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.city",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "b0dfc757-f72f-43b9-8128-3d4caf48c46b",
+                                        "name": "Label",
+                                        "value": "address.city",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "81c046bc-73cd-458d-aa2f-7b20da4e1ed5",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f41bf48c-e779-452b-9036-d7d246f29412",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "6a306058-5693-4b94-845e-ae95634744d3",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "702567be-38b2-49ee-b91a-eb695229a928",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "85bd5dca-fa93-4e7f-87b3-6ba7609cdbf6",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.region",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "d488fce1-830e-4145-a768-e43f750bd4bd",
+                                        "name": "Label",
+                                        "value": "address.region",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5441aef5-7c95-45d5-8c93-b095b81a160f",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "208160e0-4fda-48d6-8929-5bdaa1efd294",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "c3eb5404-b691-4868-8004-1d2c849caaa7",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "64e23962-d3f9-4f41-bbe8-f5021d6a8a8c",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "5d8513e3-3e26-4c91-83e9-4d2a3d730874",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.postalCode",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "c71a1992-2c56-4da3-96c4-52ab5bb0e29d",
+                                        "name": "Label",
+                                        "value": "address.postalCode",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "9842bdba-7ee5-47a1-9ff7-9a2ef76f740e",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "752d6a84-5c87-4fdc-8f03-41c306c9286f",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "2f0adea6-1799-4548-bf1c-123a742e30ab",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "19e80fc0-7b62-4ccd-8d8e-862ead145fbf",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "1085074e-9931-4bf8-a00c-9f03ebaa6983",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.country",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "672aacd4-44d5-4ccc-bf8a-95fec103f858",
+                                        "name": "Label",
+                                        "value": "address.country",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "4828fb1c-e98c-46e5-b73b-e53d05db95c6",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "95f640fe-7409-4114-8f29-91b5e85fd159",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "d4694915-f75f-4b84-a7c0-32bc724ca066",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "input",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "bc82bbf9-984b-47e1-aa12-75aaea3a079d",
+                                        "name": "ContentType",
+                                        "value": "Text",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "4dc4cf53-e079-4092-b986-466dbca61c90",
+                                        "name": "Value",
+                                        "valueType": "string",
+                                        "propertyType": 0,
+                                        "isTwoWayBinding": false,
+                                        "value": "address.phone",
+                                        "context": {
+                                            "type": 8,
+                                            "targetId": "other-form"
+                                        }
+                                    },
+                                    {
+                                        "id": "82df45c5-ded6-4a9c-90d6-347b82f8256d",
+                                        "name": "Label",
+                                        "value": "address.phone",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "e51b7706-7fb1-45d3-9b0c-421e3feb4287",
+                                        "name": "Required",
+                                        "value": false,
+                                        "valueType": "boolean",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "6c03f1c1-d679-4ebe-b254-c2c7ef607f0a",
+                                        "name": "Type",
+                                        "value": "border",
+                                        "valueType": "string",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": null,
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [],
+                                "templates": []
+                            },
+                            {
+                                "id": "b9d88b26-5b93-4688-b2a6-0cd697ba05fa",
+                                "name": "",
+                                "libraryId": "IGDSC",
+                                "definitionId": "button",
+                                "actions": [],
+                                "properties": [
+                                    {
+                                        "id": "f7de03f2-4d3c-4aa9-93c8-9814a5d4fce9",
+                                        "name": "Type",
+                                        "value": "Contained",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    },
+                                    {
+                                        "id": "f7de03f2-4d3c-4aa9-93c8-9814a5d4fce7",
+                                        "name": "Kind",
+                                        "value": "Submit",
+                                        "valueType": "enum",
+                                        "propertyType": 0
+                                    }
+                                ],
+                                "position": {
+                                    "mode": 0,
+                                    "top": null,
+                                    "left": null,
+                                    "right": null,
+                                    "bottom": null,
+                                    "horizontalMiddle": null,
+                                    "verticalMiddle": null
+                                },
+                                "size": {
+                                    "width": null,
+                                    "height": "max-content",
+                                    "minWidth": null,
+                                    "minHeight": null,
+                                    "maxWidth": null,
+                                    "maxHeight": null
+                                },
+                                "margin": null,
+                                "padding": null,
+                                "layout": null,
+                                "itemLayout": {
+                                    "mode": 0,
+                                    "alignSelf": null,
+                                    "justifySelf": null
+                                },
+                                "iterator": null,
+                                "content": null,
+                                "hidden": false,
+                                "styles": [],
+                                "children": [
+                                    {
+                                        "id": "ab1c50ae-1339-470a-b7f2-f914f70f4ecd",
+                                        "name": "",
+                                        "libraryId": "GSC",
+                                        "definitionId": "content",
+                                        "actions": [],
+                                        "properties": [],
+                                        "position": {
+                                            "mode": 0,
+                                            "top": null,
+                                            "left": null,
+                                            "right": null,
+                                            "bottom": null,
+                                            "horizontalMiddle": null,
+                                            "verticalMiddle": null
+                                        },
+                                        "size": {
+                                            "width": null,
+                                            "height": null,
+                                            "minWidth": null,
+                                            "minHeight": null,
+                                            "maxWidth": null,
+                                            "maxHeight": null
+                                        },
+                                        "margin": null,
+                                        "padding": null,
+                                        "layout": null,
+                                        "itemLayout": null,
+                                        "iterator": null,
+                                        "content": {
+                                            "id": "1588d046-77e7-4749-9d35-17af101023a4",
+                                            "name": "content",
+                                            "value": "Submit",
+                                            "valueType": "string",
+                                            "propertyType": 0
+                                        },
+                                        "hidden": false,
+                                        "styles": [],
+                                        "children": [],
+                                        "templates": []
+                                    }
+                                ],
+                                "templates": []
+                            }
+                        ],
+                        "templates": []
+                    }
+                ],
+                "styles": [],
+                "templates": [],
+                "variables": [
+                ]
+            }
+        ],
+        "variables": []
+    },
+    "theme": {
+        "id": "materialLight",
+        "libraryId": "IGDSC",
+        "schema": "light-material-schema",
+        "colors": {
+            "primary": "#0099ff",
+            "secondary": "#e41c77",
+            "surface": "#ffffff",
+            "error": "#ff134a",
+            "success": "#4eb862",
+            "warn": "#fbb13c",
+            "info": "#1377d5",
+            "gray": "#000000"
+        },
+        "typeface": "Titillium Web",
+        "fonts": [
+            {
+                "location": "https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap"
+            }
+        ],
+        "typeScale": {
+            "base": "default-type-scale",
+            "categories": []
+        },
+        "legacySupport": null,
+        "roundness": null,
+        "elevation": null
+    },
+    "dataSources": [
+        {
+            "id": "08dcb215-9d47-40f5-8c98-fcaeffeb33c6",
+            "name": "NorthwindCRUD",
+            "baseUrl": "https://data-northwind.indigo.design",
+            "dataObjects": [
+                {
+                    "id": "3b9f7777-d1c1-4d52-a60e-1695a251601e",
+                    "name": "/Customers",
+                    "schema": {
+                        "$ref": "#/schemas/CustomerDto"
+                    },
+                    "requestInfo": {
+                        "httpMethod": "post",
+                        "url": "/Customers",
+                        "security": [
+                            {
+                                "id": "Bearer",
+                                "scopes": []
+                            }
+                        ],
+                        "body": {
+                            "value": "{\n  \"customerId\": \"string\",\n  \"companyName\": \"string\",\n  \"contactName\": \"string\",\n  \"contactTitle\": \"string\",\n  \"address\": {\n    \"street\": \"string\",\n    \"city\": \"string\",\n    \"region\": \"string\",\n    \"postalCode\": \"string\",\n    \"country\": \"string\",\n    \"phone\": \"string\"\n  }\n}",
+                            "schema": {
+                                "$ref": "#/schemas/CustomerDto"
+                            }
+                        }
+                    }
+                }
+            ],
+            "schemas": {
+                "AddressDto": {
+                    "type": "object",
+                    "properties": {
+                        "street": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "city": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "region": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "postalCode": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "country": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "phone": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "CategoryDetailsDto": {
+                    "type": "object",
+                    "properties": {
+                        "categoryId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "description": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "name": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "picture": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "CategoryDto": {
+                    "type": "object",
+                    "properties": {
+                        "categoryId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "description": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "name": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "CategoryDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/CategoryDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "CountResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "count": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "CustomerDto": {
+                    "type": "object",
+                    "properties": {
+                        "customerId": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "companyName": {
+                            "type": "string"
+                        },
+                        "contactName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "contactTitle": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "address": {
+                            "$ref": "#/schemas/AddressDto"
+                        }
+                    }
+                },
+                "CustomerDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/CustomerDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "EmployeeDto": {
+                    "type": "object",
+                    "properties": {
+                        "employeeId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "lastName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "firstName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "title": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "titleOfCourtesy": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "birthDate": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date"
+                        },
+                        "hireDate": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "date"
+                        },
+                        "addressId": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "address": {
+                            "$ref": "#/schemas/AddressDto"
+                        },
+                        "notes": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "avatarUrl": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "uri"
+                        },
+                        "reportsTo": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "EmployeeDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/EmployeeDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "EmployeeTerritoryDto": {
+                    "type": "object",
+                    "properties": {
+                        "employeeId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "territoryId": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "LoginDto": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "nullable": true,
+                            "format": "email"
+                        },
+                        "password": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "OrderDetailDto": {
+                    "type": "object",
+                    "properties": {
+                        "orderId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "productId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "unitPrice": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "quantity": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "discount": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    }
+                },
+                "OrderDto": {
+                    "type": "object",
+                    "properties": {
+                        "orderId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "customerId": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "employeeId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "shipperId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "orderDate": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "requiredDate": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "shipVia": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "freight": {
+                            "type": "number",
+                            "format": "double"
+                        },
+                        "shipName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "shipAddress": {
+                            "$ref": "#/schemas/AddressDto"
+                        }
+                    }
+                },
+                "OrderDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/OrderDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "ProductDto": {
+                    "type": "object",
+                    "properties": {
+                        "productId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "supplierId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        },
+                        "categoryId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        },
+                        "quantityPerUnit": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "unitPrice": {
+                            "type": "number",
+                            "nullable": true,
+                            "format": "double"
+                        },
+                        "unitsInStock": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        },
+                        "unitsOnOrder": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        },
+                        "reorderLevel": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        },
+                        "discontinued": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "ProductDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/ProductDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "RegionDto": {
+                    "type": "object",
+                    "properties": {
+                        "regionId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "regionDescription": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "RegionDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/RegionDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "RegisterDto": {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string",
+                            "format": "email"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "confirmedPassword": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "SalesDto": {
+                    "type": "object",
+                    "properties": {
+                        "productId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "quantitySold": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "saleAmount": {
+                            "type": "number",
+                            "format": "double"
+                        }
+                    }
+                },
+                "ShipperDto": {
+                    "type": "object",
+                    "properties": {
+                        "shipperId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "companyName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "phone": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "ShipperDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/ShipperDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "SupplierDto": {
+                    "type": "object",
+                    "properties": {
+                        "supplierId": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "companyName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "contactName": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "contactTitle": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "address": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "city": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "region": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "postalCode": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "country": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "phone": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "fax": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "homePage": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    }
+                },
+                "SupplierDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/SupplierDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                },
+                "TerritoryDto": {
+                    "type": "object",
+                    "properties": {
+                        "territoryId": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "territoryDescription": {
+                            "type": "string",
+                            "nullable": true
+                        },
+                        "regionId": {
+                            "type": "integer",
+                            "nullable": true,
+                            "format": "int32"
+                        }
+                    }
+                },
+                "TerritoryDtoPagedResultDto": {
+                    "type": "object",
+                    "properties": {
+                        "items": {
+                            "type": "array",
+                            "nullable": true,
+                            "items": {
+                                "$ref": "#/schemas/TerritoryDto"
+                            }
+                        },
+                        "totalRecordsCount": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageSize": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "pageNumber": {
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        "totalPages": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                }
+            },
+            "securitySchemes": {}
+        }
+    ],
+    "libraries": [],
+    "assets": []
+}
