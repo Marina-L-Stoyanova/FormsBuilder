@@ -40,16 +40,16 @@ export default class MasterView extends LitElement {
     }
   `;
 
-  @query("form")
-  public form!: HTMLFormElement;
+  // @query("form")
+  // public form!: HTMLFormElement;
 
   public dataSource2Customers: CustomerDto[] = [];
 
   @state()
 
-  private onAddNewSubmit(e: any) {
-    e.preventDefault();
-  const formObject = formDataToObject(this.form);
+  private onAddNewSubmit(args: SubmitEvent ) {
+    args.preventDefault();
+  const formObject = formDataToObject(args.target as HTMLFormElement);
   dataSource2Service.addCustomer(formObject).then(data => {
       // TODO: handle here local data update if needed.
     });
@@ -58,8 +58,6 @@ export default class MasterView extends LitElement {
   render() {
     return html`
       <link rel='stylesheet' href='../../ig-theme.css'>
-      <link rel='stylesheet' href='node_modules/igniteui-webcomponents-grids/grids/themes/light/material.css'>
-
       <form @submit="${this.onAddNewSubmit}" class="column-layout form" id="form">
           <igc-input class="form-input" id="customerId" name="customerId" label="Customer ID" placeholder="Customer ID">
           </igc-input>

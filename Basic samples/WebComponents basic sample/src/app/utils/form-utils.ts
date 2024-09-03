@@ -1,12 +1,15 @@
-export function formDataToObject(form: HTMLFormElement): any {
-    return Array.from((new FormData(form)).entries()).reduce((obj: any, pair: any) => {
+interface IObject{
+    [key:string] : FormDataEntryValue | IObject;
+}
+export function formDataToObject(form: HTMLFormElement): IObject {
+    return Array.from((new FormData(form)).entries()).reduce((obj:IObject , pair) => {
         const [key, value] = pair;
         const keys = key.split('.');
         const last = keys.pop();
         let target = obj;
         // expand structure (if needed) and navigate to target:
-        keys.forEach((k: any) => { target[k] ??= {}; target = target[k]; });
-        target[last] = value;
+        keys.forEach((k) => { target[k] ??= {}; target = target[k] as IObject; });
+        target[last!] = value;
         return obj;
     }, {});
 }
