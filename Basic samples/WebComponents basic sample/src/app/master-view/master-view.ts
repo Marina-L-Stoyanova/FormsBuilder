@@ -40,12 +40,7 @@ export default class MasterView extends LitElement {
     }
   `;
 
-  // @query("form")
-  // public form!: HTMLFormElement;
-
   public dataSource2Customers: CustomerDto[] = [];
-
-  @state()
 
   private onAddNewSubmit(args: SubmitEvent ) {
     args.preventDefault();
