@@ -1,4 +1,4 @@
-import { IgrButton, IgrButtonModule, IgrInput, IgrInputModule, IgrTextareaModule } from "@infragistics/igniteui-react";
+import { IgrButton, IgrButtonModule, IgrInput, IgrInputModule, IgrRipple, IgrRippleModule, SubmitEvent } from "@infragistics/igniteui-react";
 import * as React from "react";
 import { formDataToObject } from '../utils/form-utils';
 import createClassTransformer from '../style-utils';
@@ -11,40 +11,40 @@ IgrTextareaModule.register();
 
 export default function MasterView() {
   const classes = createClassTransformer(styles);
-  const [, forceUpdate] = React.useReducer(x => x + 1, 0);
+  const uuid = () => crypto.randomUUID();
 
-  const next = () => {
-    forceUpdate();
-  };
-
-  const onAddNewSubmit = async (args: SubmitEvent) => {
-    args.preventDefault(); // Prevent the default form submission
-
-    const formObject = formDataToObject(args.target as HTMLFormElement);
-    try {
-      const data = await northwindCRUDService.postCustomerDto(formObject);
-      // TODO: handle local data update if needed.
-      console.log("Data submitted successfully:", data);
-    } catch (error) {
-      console.error("Error submitting form data:", error);
-    }
-  };
+  function submit(args: SubmitEvent) {
+    args.preventDefault();
+    const submitCustomerDto = formDataToObject(args.target as HTMLFormElement);
+    postCustomerDto(submitCustomerDto).then((res) => {
+      if (res) {
+        // TODO: handle here local data update if needed.
+      } else {
+        // TODO: handle error here!
+      }
+    });
+  }
 
   return (
+    <>
       <div className={classes("row-layout master-view-container")}>
-          <form className="form" onSubmit={onAddNewSubmit}>
-            <IgrInput label="Customer ID" outlined="true" name="customerId" className={classes("user-input")} key="customerId" blur={next}>
-            </IgrInput>
-            <IgrInput label="Company name" outlined="true" name="companyName" className={classes("user-input")} key="companyName" blur={next}>
-            </IgrInput>
-            <IgrInput label="Contact name" outlined="true" name="contactName" className={classes("user-input")} key="contactName" blur={next}>
-            </IgrInput>
-            <IgrInput label="Contact title" outlined="true" name="contactTitle" className={classes("user-input")} key="contactTitle" blur={next}>
-            </IgrInput>
-            <IgrButton type="submit" variant="flat">
-          <span>Submit</span>
-        </IgrButton>
-          </form>
+        <form onSubmit={submit} className={classes("column-layout form")}>
+          <IgrInput name="customerId" label="customerId" outlined="true"></IgrInput>
+          <IgrInput name="companyName" label="companyName" outlined="true"></IgrInput>
+          <IgrInput name="contactName" label="contactName" outlined="true"></IgrInput>
+          <IgrInput name="contactTitle" label="contactTitle" outlined="true"></IgrInput>
+          <IgrInput name="address.street" label="address.street" outlined="true"></IgrInput>
+          <IgrInput name="address.city" label="address.city" outlined="true"></IgrInput>
+          <IgrInput name="address.region" label="address.region" outlined="true"></IgrInput>
+          <IgrInput name="address.postalCode" label="address.postalCode" outlined="true"></IgrInput>
+          <IgrInput name="address.country" label="address.country" outlined="true"></IgrInput>
+          <IgrInput name="address.phone" label="address.phone" outlined="true"></IgrInput>
+          <IgrButton className={classes("button")}>
+            <span key={uuid()}>Submit</span>
+            <IgrRipple key={uuid()}></IgrRipple>
+          </IgrButton>
+        </form>
       </div>
+    </>
   );
 }
