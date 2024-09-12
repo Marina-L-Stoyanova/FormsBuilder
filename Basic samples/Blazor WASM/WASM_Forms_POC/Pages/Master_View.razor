@@ -47,21 +47,20 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Create
         </IgbButton>
-        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="() => { EmptyModel = new(); }">
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { EmptyModel = new(); }">
             Reset
         </IgbButton>
     </EditForm>
-    <IgbButton Variant="ButtonVariant.Contained" @onclick="() => SubmitEmptyModel(emptyEditContext)">
+    <IgbButton Variant="ButtonVariant.Contained" @onclick="_ => SubmitEmptyModel(emptyEditContext)">
         Create Outside
     </IgbButton>
-    <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="() => { EmptyModel = new(); }">
+    <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { EmptyModel = new(); }">
         Reset Outside
     </IgbButton>
-
 </div>
 
 @code {
-    private CustomerDto customer;
+    private CustomerDto customer = new();
     public CustomerDto Customer
     {
         get { return customer; }
@@ -72,7 +71,7 @@
         }
     }
 
-    private CustomerDto customerModel;
+    private CustomerDto customerModel = new();
     // we do not need this. We have either empty form where no value should be supplied,
     // or we have form bound to a variable and we get the value from the clone of the variable
     // TODO: we could also skip generating of FormNames for the forms
@@ -89,7 +88,7 @@
 
     private EditContext customerEditContext = new(new CustomerDto());
 
-    private CustomerDto emptyModel;
+    private CustomerDto emptyModel = new();
     // [SupplyParameterFromForm(FormName = "empty")]
     public CustomerDto EmptyModel
     {
@@ -105,8 +104,8 @@
 
     public Master_View()
     {
-        this.Customer = new();
-        this.EmptyModel = new();
+        CustomerModel = new();
+        EmptyModel = new();
     }
 
     protected override async Task OnInitializedAsync()

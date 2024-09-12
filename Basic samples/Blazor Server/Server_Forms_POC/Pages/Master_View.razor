@@ -26,7 +26,7 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Update
         </IgbButton>
-        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="() => { CustomerModel = Customer.Clone() as CustomerDto; }">
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { CustomerModel = Customer.Clone() as CustomerDto; }">
             Reset
         </IgbButton>
     </EditForm>
@@ -47,10 +47,16 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Submit">
             Create
         </IgbButton>
-        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="() => { EmptyModel = new(); }">
+        <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { EmptyModel = new(); }">
             Reset
         </IgbButton>
     </EditForm>
+    <IgbButton Variant="ButtonVariant.Contained" @onclick="_ => SubmitEmptyModel(emptyEditContext)">
+        Create Outside
+    </IgbButton>
+    <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { EmptyModel = new(); }">
+        Reset Outside
+    </IgbButton>
 </div>
 
 @code {
