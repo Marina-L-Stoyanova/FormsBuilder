@@ -28,7 +28,10 @@ class NorthwindABService {
     return await FetchApi.fetchApiResponse<CustomerDto | undefined>(`${API_ENDPOINT}/Customers`, undefined, 'POST', body, headers);
   }
 
-  public getCustomerDto = async (id?: string): Promise<CustomerDto> => {
+  public getCustomerDto = async (id?: string): Promise<CustomerDto | undefined> => {
+    if (!id) {
+      return Promise.resolve(undefined);
+    }
     return await FetchApi.fetchApiResponse<CustomerDto>(`${API_ENDPOINT}/Customers/${id}`, undefined);
   }
 }
