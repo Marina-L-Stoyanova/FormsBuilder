@@ -1,0 +1,41 @@
+:host {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  gap: 2rem;
+}
+.column-layout {
+  display: flex;
+  flex-direction: column;
+}
+.form {
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  gap: 0.5rem;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
+}
+.button {
+  --ig-size: var(--ig-size-medium);
+  flex-shrink: 0;
+}
+.text {
+  height: max-content;
+  min-width: min-content;
+}
+.row-layout {
+  display: flex;
+}
+.group {
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: flex-start;
+  gap: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
