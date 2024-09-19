@@ -29,6 +29,12 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { CustomerModel = Customer.Clone() as CustomerDto; }">
             Reset
         </IgbButton>
+        <IgbSnackbar ActionText="Ok" Action="@(e => _snackbar!.ToggleAsync())" @ref="_snackbar">
+            Your changes were saved successfully!
+        </IgbSnackbar>
+        <IgbSnackbar ActionText="Ok" Action="@(e => _snackbar1!.ToggleAsync())" @ref="_snackbar1">
+            Uh-oh! Something went wrong.
+        </IgbSnackbar>
     </EditForm>
     <EditForm EditContext="emptyEditContext" OnValidSubmit="SubmitEmptyModel" FormName="create" class="form" master_view-scope>
         <p>Create form not related to any variable</p>
@@ -50,6 +56,12 @@
         <IgbButton Variant="ButtonVariant.Contained" DisplayType="ButtonBaseType.Reset" @onclick="_ => { EmptyModel = new(); }">
             Reset
         </IgbButton>
+        <IgbSnackbar ActionText="Ok" Action="@(e => _snackbar2!.ToggleAsync())" @ref="_snackbar2">
+            Your new submission was saved successfully!
+        </IgbSnackbar>
+        <IgbSnackbar ActionText="Ok" Action="@(e => _snackbar3!.ToggleAsync())" @ref="_snackbar3">
+            Uh-oh! Something went wrong.
+        </IgbSnackbar>
     </EditForm>
     <IgbButton Variant="ButtonVariant.Contained" @onclick="_ => SubmitEmptyModel(emptyEditContext)">
         Create Outside
@@ -60,6 +72,10 @@
 </div>
 
 @code {
+    private IgbSnackbar _snackbar;
+    private IgbSnackbar _snackbar1;
+    private IgbSnackbar _snackbar2;
+    private IgbSnackbar _snackbar3;
     private CustomerDto customer;
     public CustomerDto Customer
     {
@@ -120,12 +136,11 @@
             var result = await NorthwindRESTService.PutCustomerDto(customerDto);
             if (result != null)
             {
-                Customer.CustomerId = result.CustomerId;
-                StateHasChanged();
+                _snackbar!.ToggleAsync();
             }
             else
             {
-                // TODO: handle errors here.
+                _snackbar1!.ToggleAsync();
             }
         }
     }
@@ -138,12 +153,11 @@
             var result = await NorthwindRESTService.PostCustomerDto(customerDto);
             if (result != null)
             {
-                EmptyModel.CustomerId = result.CustomerId;
-                StateHasChanged();
+                _snackbar2!.ToggleAsync();
             }
             else
             {
-                // TODO: handle errors here.
+                _snackbar3!.ToggleAsync();
             }
         }
     }
