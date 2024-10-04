@@ -46,7 +46,7 @@ export class NorthWindAPIService {
       },
     };
     const body = data;
-    return this.http.post<CustomerDto | undefined>(`${API_ENDPOINT}/Customers`, body)
+    return this.http.post<CustomerDto | undefined>(`${API_ENDPOINT}/Customers`, body, options)
       .pipe(catchError(ErrorHandlerService.handleError<CustomerDto | undefined>('postCustomerDto', undefined)));
   }
 }
