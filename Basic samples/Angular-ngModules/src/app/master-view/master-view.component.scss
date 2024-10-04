@@ -1,0 +1,51 @@
+:host {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+}
+.column-layout {
+  display: flex;
+  flex-direction: column;
+}
+.form {
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  gap: 16px;
+  position: relative;
+  padding: 24px;
+  min-width: 50px;
+  min-height: 50px;
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+.button {
+  --ig-size: var(--ig-size-medium);
+  flex-shrink: 0;
+}
+.text {
+  height: max-content;
+  min-width: min-content;
+}
+.form_fields {
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+  gap: 16px;
+  overflow: auto;
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.row-layout {
+  display: flex;
+}
+.actions {
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-content: flex-start;
+  gap: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}

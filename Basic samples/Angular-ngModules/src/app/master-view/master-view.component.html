@@ -1,0 +1,129 @@
+<form (ngSubmit)="onUpdateNgSubmit()" [formGroup]="customerDtoFormModel" (reset)="onResetForm($event)" class="column-layout form">
+  <h6>
+    Edit Customers
+  </h6>
+  <p class="ig-typography__subtitle-1 text">
+    {{ customer?.customerId }}
+  </p>
+  <div class="column-layout form_fields">
+    <igx-input-group type="border">
+      <input type="text" formControlName="customerId" igxInput />
+      <label igxLabel>customerId</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="companyName" [required]="true" igxInput />
+      <label igxLabel>companyName</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="contactName" igxInput />
+      <label igxLabel>contactName</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="contactTitle" igxInput />
+      <label igxLabel>contactTitle</label>
+    </igx-input-group>
+    <div [formGroup]="customerDtoFormModel.controls.address">
+      <igx-input-group type="border">
+        <input type="text" formControlName="phone" igxInput />
+        <label igxLabel>address.phone</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="country" igxInput />
+        <label igxLabel>address.country</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="postalCode" igxInput />
+        <label igxLabel>address.postalCode</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="region" igxInput />
+        <label igxLabel>address.region</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="city" igxInput />
+        <label igxLabel>address.city</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="street" igxInput />
+        <label igxLabel>address.street</label>
+      </igx-input-group>
+    </div>
+  </div>
+  <div class="row-layout actions">
+    <button igxButton="outlined" type="reset" igxRipple class="button">
+      Reset
+    </button>
+    <button type="submit" igxRipple class="button">
+      Update
+    </button>
+  </div>
+  <igx-snackbar actionText="Ok" [igxToggleAction]="snackbarsuccess" #snackbarsuccess>
+    Your changes were saved successfully!
+  </igx-snackbar>
+  <igx-snackbar actionText="Ok" [igxToggleAction]="snackbarerror" #snackbarerror>
+    Uh-oh! Something went wrong.
+  </igx-snackbar>
+</form>
+<form (ngSubmit)="onCreateNgSubmit()" [formGroup]="customerDtoFormModel1" (reset)="onResetForm1($event)" class="column-layout form">
+  <h6>
+    Add Customers
+  </h6>
+  <div class="column-layout form_fields">
+    <igx-input-group type="border">
+      <input type="text" formControlName="customerId" igxInput />
+      <label igxLabel>customerId</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="companyName" [required]="true" igxInput />
+      <label igxLabel>companyName</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="contactName" igxInput />
+      <label igxLabel>contactName</label>
+    </igx-input-group>
+    <igx-input-group type="border">
+      <input type="text" formControlName="contactTitle" igxInput />
+      <label igxLabel>contactTitle</label>
+    </igx-input-group>
+    <div [formGroup]="customerDtoFormModel1.controls.address">
+      <igx-input-group type="border">
+        <input type="text" formControlName="phone" igxInput />
+        <label igxLabel>address.phone</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="country" igxInput />
+        <label igxLabel>address.country</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="postalCode" igxInput />
+        <label igxLabel>address.postalCode</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="region" igxInput />
+        <label igxLabel>address.region</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="city" igxInput />
+        <label igxLabel>address.city</label>
+      </igx-input-group>
+      <igx-input-group type="border">
+        <input type="text" formControlName="street" igxInput />
+        <label igxLabel>address.street</label>
+      </igx-input-group>
+    </div>
+  </div>
+  <div class="row-layout actions">
+    <button igxButton="outlined" type="reset" igxRipple class="button">
+      Reset
+    </button>
+    <button type="submit" igxRipple class="button">
+      Add
+    </button>
+  </div>
+  <igx-snackbar actionText="Ok" [igxToggleAction]="snackbarsuccess1" #snackbarsuccess1>
+    Your new submission was saved successfully!
+  </igx-snackbar>
+  <igx-snackbar actionText="Ok" [igxToggleAction]="snackbarerror1" #snackbarerror1>
+    Uh-oh! Something went wrong.
+  </igx-snackbar>
+</form>
