@@ -26,6 +26,11 @@ export class NorthWindAPIService {
     if (!data) {
       return of(undefined);
     }
+    const options = {
+      headers: {
+        Authorization: 'Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjI5ODViMDJmLTBkMGUtNGZiOS05ZGY0LWYxMmYzOTU3MTkzZiIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJqdGkiOiIxYWQ3ZTc0Yi00YmQ1LTRiNzEtYTJlZi1hNDIzNDkwZjQyZGIiLCJuYmYiOjE3Mjc0Mjg3MjQsImV4cCI6MTcyNzQyOTAyNCwiaWF0IjoxNzI3NDI4NzI0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MjQ0LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcyNDQvIn0.Uv_0zuAQ7NLJ5mI9S_BaPdLjNIL6RupCtpM5zUp9SmPqlGcTHDvgfJKsuXapNb7NFW9joHDcIevv0iPNuZSP5w',
+      },
+    };
     const body = data;
     return this.http.put<CustomerDto | undefined>(`${API_ENDPOINT}/Customers`, body)
       .pipe(catchError(ErrorHandlerService.handleError<CustomerDto | undefined>('putCustomerDto', undefined)));
