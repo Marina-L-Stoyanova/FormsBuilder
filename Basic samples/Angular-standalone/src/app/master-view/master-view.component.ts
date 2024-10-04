@@ -61,7 +61,7 @@ export class MasterViewComponent implements OnInit, OnDestroy {
 
   public onResetForm(e: Event) {
     e.preventDefault();
-    this.customerDtoFormModel.reset();
+    this.customerDtoFormModel.reset(this.customer);
   }
 
   public onCreateNgSubmit() {
