@@ -1,0 +1,83 @@
+@page "/"
+@page "/master_view"
+@using Models.NorthWindCRUD
+@using NorthWindCRUD
+@inject INorthWindCRUDService NorthWindCRUDService
+
+<div class="row-layout master-view-container">
+    <EditForm OnValidSubmit="OnValidSubmitCustomerInput" EditContext="customerInputEditContext" FormName="customerInput" class="column-layout form">
+        <DataAnnotationsValidator />
+        <h6>
+            Add Customer
+        </h6>
+        <div class="column-layout form_fields">
+            <IgbInput @bind-Value="@CustomerInputModelModel.CustomerId" Required Change="OnChange" Label="customerId" Outlined="true"></IgbInput>
+            <ValidationMessage For="() => CustomerInputModelModel.CustomerId"> </ValidationMessage>
+            <IgbInput @bind-Value="@CustomerInputModelModel.CompanyName" Label="companyName" Required Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.ContactName" Label="contactName" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.ContactTitle" Label="contactTitle" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.Street" Label="address.street" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.City" Label="address.city" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.Region" Label="address.region" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.PostalCode" Label="address.postalCode" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.Country" Label="address.country" Outlined="true"></IgbInput>
+            <IgbInput @bind-Value="@CustomerInputModelModel.Address.Phone" Label="address.phone" Outlined="true"></IgbInput>
+        </div>
+        <div class="row-layout actions">
+            <IgbButton Variant="ButtonVariant.Outlined" DisplayType="ButtonBaseType.Reset" @onclick="@(_ => { CustomerInputModelModel = new(); })" class="button" master_view-scope>
+                Reset
+                <IgbRipple></IgbRipple>
+            </IgbButton>
+            <IgbButton DisplayType="ButtonBaseType.Submit" class="button" master_view-scope>
+                Add
+                <IgbRipple></IgbRipple>
+            </IgbButton>
+        </div>
+        <IgbSnackbar ActionText="OK" Action="@(e => _snackbarsuccess!.ToggleAsync())" @ref="_snackbarsuccess">
+            Your new submission was saved successfully!
+        </IgbSnackbar>
+        <IgbSnackbar ActionText="OK" Action="@(e => _snackbarerror!.ToggleAsync())" @ref="_snackbarerror">
+            Uh-oh! Something went wrong.
+        </IgbSnackbar>
+    </EditForm>
+</div>
+
+@code {
+    private CustomerInputModel CustomerInputModelModel = new CustomerInputModel();
+    private IgbSnackbar _snackbarsuccess;
+    private IgbSnackbar _snackbarerror;
+    private EditContext customerInputEditContext;
+
+    public Master_View()
+    {
+        CustomerInputModelModel = new();
+    }
+
+    protected void OnChange()
+    {
+        var fieldIdentifier = FieldIdentifier.Create(() => CustomerInputModelModel.CustomerId);
+        customerInputEditContext.NotifyFieldChanged(fieldIdentifier);
+    }
+
+    protected override void OnInitialized()
+    {
+        customerInputEditContext = new EditContext(CustomerInputModelModel);
+    }
+
+    private async void OnValidSubmitCustomerInput(EditContext args)
+    {
+        var customerInputModel = (CustomerInputModel)args.Model;
+        if (customerInputModel != null)
+        {
+            var result = await NorthWindCRUDService.PostCustomerInputModel(customerInputModel);
+            if (result != null)
+            {
+                _snackbarsuccess!.ShowAsync();
+            }
+            else
+            {
+                _snackbarerror!.ShowAsync();
+            }
+        }
+    }
+}
